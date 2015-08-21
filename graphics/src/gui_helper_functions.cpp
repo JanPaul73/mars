@@ -246,6 +246,9 @@ namespace mars {
       completeNode  = GuiHelper::readNodeFromFile(node->filename);
 
       // check whether it is a osg::Group (.obj file)
+      if(!completeNode){
+          throw std::runtime_error("cannot read node from file");
+      }
       if((myGroupFromRead = completeNode->asGroup()) != 0){
         //go through the read node group and combine the parts of the actually
         //handled node
