@@ -23,6 +23,9 @@ add_definitions(${PKGCONFIG_CLFAGS_OTHER})  #flags excluding the ones with -I
 
 include_directories(src)
 
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+#link_directories(${Boost_LIBRARY_DIRS})
 
 set(HEADERS
     src/Logging.hpp
@@ -45,6 +48,19 @@ set(HEADERS
     src/utils.h
 
     src/exceptions/SceneParseException.h
+    
+    src/InteractionTypes/Analog.h
+    src/InteractionTypes/Arm.h
+    src/InteractionTypes/BaseType.h
+    src/InteractionTypes/Finger.h
+    src/InteractionTypes/ForceTorque.h    
+    src/InteractionTypes/FullBody.h
+    src/InteractionTypes/Hand.h
+    src/InteractionTypes/Head.h
+    src/InteractionTypes/Leg.h
+    src/InteractionTypes/Pose.h
+    src/InteractionTypes/Vec3.h
+    src/InteractionTypes/Velocity6D.h    
 )
 
 set(SOURCES 
@@ -58,6 +74,19 @@ set(SOURCES
     src/GraphicData.cpp
     src/ControllerData.cpp
     src/utils.cpp
+    
+    src/InteractionTypes/Analog.cpp
+    src/InteractionTypes/Arm.cpp
+    src/InteractionTypes/BaseType.cpp
+    src/InteractionTypes/Finger.cpp
+    src/InteractionTypes/ForceTorque.cpp    
+    src/InteractionTypes/FullBody.cpp
+    src/InteractionTypes/Hand.cpp
+    src/InteractionTypes/Head.cpp
+    src/InteractionTypes/Leg.cpp
+    src/InteractionTypes/Pose.cpp
+    src/InteractionTypes/Vec3.cpp
+    src/InteractionTypes/Velocity6D.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
