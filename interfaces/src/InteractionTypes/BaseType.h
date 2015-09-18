@@ -31,7 +31,7 @@ public:
 
 protected:
 	std::string name;
-	int timestamp;
+	int timestamp; //#JanPaul: Should we instead use "rock\base-types\base\Time.hpp"? (Could be too powerful and have negative dependencies.)
 	float uncertainty;
 };
 

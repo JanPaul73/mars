@@ -50,7 +50,7 @@ protected:
 		};
 		Vec3 joints[5];
 	};*/
-	Vec3 carpPos;
+	Vec3 carpPos; //#JanPaul: Sure we only need positions and not poses and/or joint angle positions? It would at least be good to maybe only store data about these parts in only one form and then be able to get/set the same data in other forms. For example set only joint angle positions by setter methods, store only positions (3d) in variables and later get limb (finger etc.) poses from getter methods if needed.
 	Vec3 mcpPos;
 	Vec3 pipPos;
 	Vec3 dipPos;
