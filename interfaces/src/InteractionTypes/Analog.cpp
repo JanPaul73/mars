@@ -14,7 +14,7 @@ namespace datatype {
 Analog::Analog(std::string name) :
 	BaseType(name)
 {
-
+	value=0.0f;
 }
 
 Analog::~Analog() {
