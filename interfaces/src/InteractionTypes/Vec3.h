@@ -36,7 +36,7 @@ protected:
 	                      //use "Vector3d" from "/MARS/rock/base-types/base/Eigen.hpp" to be more consequent?
 	                      //Wrench ("/MARS/rock/base-types/base/Wrench.hpp"),
 	                      //which "/MARS/simulation/mars/interfaces/src/InteractionTypes/ForceTorque.h" is based on,
-	                      //Also uses "Vector3d" from "/MARS/rock/base-types/base/Eigen.hpp"
+	                      //also uses "Vector3d" from "/MARS/rock/base-types/base/Eigen.hpp"
 };
 
 } /* namespace datatype */
