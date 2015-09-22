@@ -68,7 +68,15 @@ public:
 
 protected:
 	Pose pose;
-	Vec3 palmPos; //#JanPaul: Sure we only need positions and not poses and/or joint angle positions? It would at least be good to maybe only store data about these parts in only one form and then be able to get/set the same data in other forms. For example set only joint angle positions by setter methods, store only positions (3d) in variables and later get limb (finger etc.) poses from getter methods if needed.
+	Vec3 palmPos;  //#JanPaul: Sure we only need positions and not poses and/or joint angle positions?
+                   //It would at least be good to maybe only store data about these parts in only one form
+                   //and then be able to get/set the same data in other forms. For example set only joint angle
+                   //positions by setter methods, store only positions (3d) in variables and later get
+                   //limb (finger etc.) poses from getter methods if needed. As storing positions needs
+                   //(simple) per-joint inverse kinematics to calculate joint angle positions and poses from that,
+                   //storing poses or joint angle positions might be better. In any case, additionally the rotation
+                   //axis of each joint should be stored somehow additionally as this will be needed for all those
+                   //conversions.
 	Vec3 palmNormal;
 	Vec3 wristPos;
 	Finger thumb, indexFinger, middleFinger, ringFinger, pinky;
