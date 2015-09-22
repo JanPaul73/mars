@@ -31,7 +31,9 @@ public:
 
 protected:
 	std::string name;
-	int timestamp; //#JanPaul: Should we instead use "rock\base-types\base\Time.hpp"? (Could be too powerful and have negative dependencies.)
+	int timestamp; //#JanPaul: Should we instead use "/MARS/rock/base-types/base/Time.hpp"?
+	               //(Could be too powerful and have negative dependencies.)
+	               //Or even use the template "/MARS/rock/base-types/base/templates/TimeStamped.hpp"?
 	float uncertainty;
 };
 

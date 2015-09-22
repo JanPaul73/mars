@@ -35,8 +35,8 @@ public:
 
 protected:
 	Hand hand;
-	Vec3 elbowPos;
-	Vec3 shoulderPos;
+	Vec3 elbowPos;    //#JanPaul: again the question if positions without at least a rotation axis are enough
+	Vec3 shoulderPos; //#JanPaul: 3d position relative to what? Body center?
 };
 
 } /* namespace datatype */

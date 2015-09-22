@@ -32,7 +32,11 @@ public:
 	void fromDataPackage(const data_broker::DataPackage& pkg);
 
 protected:
-	utils::Vector vector;
+	utils::Vector vector; //#JanPaul: Maybe instead of using "/MARS/simulation/mars/common/utils/src/Vector.h"
+	                      //use "Vector3d" from "/MARS/rock/base-types/base/Eigen.hpp" to be more consequent?
+	                      //Wrench ("/MARS/rock/base-types/base/Wrench.hpp"),
+	                      //which "/MARS/simulation/mars/interfaces/src/InteractionTypes/ForceTorque.h" is based on,
+	                      //Also uses "Vector3d" from "/MARS/rock/base-types/base/Eigen.hpp"
 };
 
 } /* namespace datatype */

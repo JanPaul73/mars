@@ -22,7 +22,7 @@ public:
 	Analog(std::string name);
 	virtual ~Analog();
 
-	float getValue() const;
+	float getValue() const; //#JanPaul: why no setters?
 
 	using BaseType::toDataPackage;
 	using BaseType::fromDataPackage;
