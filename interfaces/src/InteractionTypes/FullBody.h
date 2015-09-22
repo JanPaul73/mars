@@ -44,7 +44,7 @@ protected:
 	Arm leftArm, rightArm;
 	Head head;
 	Leg leftLeg, rightLeg;
-	Vec3 shoulderCenter, spinePos, hipCenter;
+	Vec3 shoulderCenter, spinePos, hipCenter; //#JanPaul: No 6D-poses necessary?
 };
 
 } /* namespace datatype */

@@ -35,7 +35,7 @@ public:
 	const Vec3& getKneePos() const;
 
 protected:
-	Vec3 hipPos, kneePos, anklePos, footPos;
+	Vec3 hipPos, kneePos, anklePos, footPos; //#JanPaul: Again, only positions?
 };
 
 } /* namespace datatype */
