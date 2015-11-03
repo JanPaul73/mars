@@ -118,6 +118,7 @@ namespace mars {
       // delete any coefficient vectors we might have created
       delete maxspeed_coefficients;
       delete maxeffort_coefficients;
+      mimics.clear();
     }
 
     void SimMotor::addMimic(SimMotor* mimic) {
@@ -359,8 +360,7 @@ namespace mars {
       current = (kXY*fabs(effort*joint_velocity) +
                  kX*fabs(effort) +
                  kY*fabs(joint_velocity) + k);
-      if(current < 0.0)
-        current = 0.0;
+      current = fabs(current);
     }
 
     void SimMotor::estimateTemperature(sReal time_ms) {
@@ -398,10 +398,10 @@ namespace mars {
     }
 
     void SimMotor::initCurrentEstimation() {
-      kXY = 0;
-      kX = 0;
-      kY = 0;
-      k = 0;
+      kXY = 100.0*((0.00002) / ((9.81*0.07)*(2*M_PI/60)));
+      kX  = 0.00512 / (9.81*0.07);
+      kY  = 100.0*(0.00006 / (2*M_PI/60));
+      k   = 0.025;
       current = 0;
     }
 
@@ -641,6 +641,7 @@ namespace mars {
       controlValue = value;
       if(!control->sim->isSimRunning()) {
         myJoint->setOfflinePosition(value);
+        refreshPositions();
       }
     }
 
