@@ -62,7 +62,7 @@ void FullBody::toDataPackage(data_broker::DataPackage& pkg) const {
 	                              //Solution: Each of these datatypes needs its own name (already there and
 	                              //in constructor, just not initialized) which must then be prefixed to the data item
 	                              //with a "/" (already done in "Pose" for example). All parents' names need to be
-	                              //prefixed, too, by something linke e.g.
+	                              //prefixed, too, by something like e.g.
 	                              //Arm leftArm(this->name+"/"+"leftArm"), rightArm(this->name+"/"+"leftArm");
 	                              //so that data items like "Body1/leftArm/elbowPos/x" are sent and received.
 	                              //(The above example should be replaced by a more elegant solution like
