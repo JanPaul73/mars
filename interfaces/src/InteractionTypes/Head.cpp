@@ -11,7 +11,7 @@ namespace mars {
 namespace interaction {
 namespace datatype {
 
-Head::Head(std::string name) :
+Head::Head(std::string) :
 	BaseType(name),
 	pose(name+"/pose")
 {

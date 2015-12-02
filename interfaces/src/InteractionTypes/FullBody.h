@@ -22,7 +22,7 @@ namespace datatype {
  */
 class FullBody: public BaseType {
 public:
-	FullBody(std::string name);
+	FullBody(std::string name ="fullBody");
 	virtual ~FullBody();
 
 	using BaseType::toDataPackage;

@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Head: public BaseType {
 public:
-	Head(std::string name);
+	Head(std::string name ="head");
 	virtual ~Head();
 
 	const Pose& getPose() const;

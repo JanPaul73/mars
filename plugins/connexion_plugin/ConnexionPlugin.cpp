@@ -120,7 +120,105 @@ namespace mars {
         delete newValues;
       }
 
+      void ConnexionPlugin::updateSpaceMouseState() {
+        double data[7];
+        Quaternion q(1.0, 0.0, 0.0, 0.0);
+
+        camMutex.lock();
+        sReal tmpCamState[7];
+        tmpCamState[0] = camState[0];
+        tmpCamState[1] = camState[1];
+        tmpCamState[2] = camState[2];
+        tmpCamState[3] = camState[3];
+        tmpCamState[4] = camState[4];
+        tmpCamState[5] = camState[5];
+        tmpCamState[6] = camState[6];
+        Vector trans(camState[0], camState[1], camState[2]);
+        Quaternion qRot(camState[6], camState[3], camState[4], camState[5]);
+        camState[0] = 0.0;
+        camState[1] = 0.0;
+        camState[2] = 0.0;
+        camState[3] = 0.0; //q.x
+        camState[4] = 0.0; //q.y
+        camState[5] = 0.0; //q.z
+        camState[6] = 1.0; //q.w
+        camMutex.unlock();
+
+        if (object_mode == 1) {
+          //interfaces::GraphicsWindowInterface *gw = control->graphics->get3DWindow(win_id);
+
+          //if (gw) {
+            if (resetCam) {
+              /*gw->getCameraInterface()->updateViewportQuat(tmpCamState[0], //TODO: Jan Paul: Now instead write data into the Envire2 tree using the spaceMouse_ member
+                                                           tmpCamState[1],
+                                                           tmpCamState[2],
+                                                           tmpCamState[3],
+                                                           tmpCamState[4],
+                                                           tmpCamState[5],
+                                                           tmpCamState[6]);*/
+              spaceMouse_.setState(trans, qRot);
+              resetCam = false;
+            }
+            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //TODO: Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
+                                                      data+3, data+4, data+5,
+                                                      data+6);*/
+            q = Quaternion(data[6], data[3], data[4], data[5]);
+            trans = q*trans;
+            q = q * qRot;
+
+            spaceMouse_.setVelocity(trans, qRot);
+
+            data[0] += trans.x();
+            data[1] += trans.y();
+            data[2] += trans.z();
+
+            trans.x()=data[0];
+            trans.y()=data[1];
+            trans.z()=data[2];
+            spaceMouse_.setState(trans, q);
+
+            /*gw->getCameraInterface()->updateViewportQuat(data[0], data[1], data[2], //TODO: Jan Paul: Now instead write data into the Envire2 tree using the spaceMouse_ member
+                                                         q.x(), q.y(), q.z(), q.w());*/
+          //}
+        }
+        else if (object_mode == 2) {
+          //interfaces::GraphicsWindowInterface *gw = control->graphics->get3DWindow(win_id);
+
+          //if (gw) {
+            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //TODO: Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
+                                                      data+3, data+4, data+5,
+                                                      data+6);*/
+            q = Quaternion(data[6], data[3], data[4], data[5]);
+            trans = q*trans;
+          }
+          core_objects_exchange node;
+          control->nodes->getNodeExchange(object_id, &node);
+          Quaternion tmpQ(node.rot);
+          Vector tmpV = node.pos;
+
+          //trans = QVRotate(tmpQ, trans);
+          Quaternion qi = q;
+          qi.x() *= -1;
+          qi.y() *= -1;
+          qi.z() *= -1;
+          qRot = q * qRot * qi;
+          //tmpQ = quad_state;
+          tmpQ = qRot * tmpQ;
+          //tmpQ = tmpQ*qi;
+
+          tmpV += trans;
+          NodeData my_node;
+          my_node.index = object_id;
+          my_node.pos = tmpV;
+          my_node.rot = tmpQ;
+          control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL);
+          control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
+        //}
+      }
+
       void ConnexionPlugin::preGraphicsUpdate() {
+    	//TODO: Jan Paul: This should now be done using an Envire2-Callback (or Envire2 Graph Data)
+    	/*
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
 
@@ -205,6 +303,7 @@ namespace mars {
           control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL);
           control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
         }
+        */
       }
 
       void ConnexionPlugin::menuAction(int action, bool checked) {
@@ -253,7 +352,7 @@ namespace mars {
           motion[4] *= sensitivity[4]*use_axis[4] * 0.001;
           motion[5] *= sensitivity[5]*use_axis[5] * 0.001;
 
-          updateCam(motion);
+          updateSpaceMouseRawState(motion);
 
           if (newValues->button1 == 1) {
             camReset();
@@ -267,7 +366,7 @@ namespace mars {
       }
 
 
-      void ConnexionPlugin::updateCam(sReal motion[6]) {
+      void ConnexionPlugin::updateSpaceMouseRawState(sReal motion[6]) {
         sReal tx, ty, tz;
         sReal rx, ry, rz;
 

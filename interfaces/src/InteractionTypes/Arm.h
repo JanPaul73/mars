@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Arm: public BaseType {
 public:
-	Arm(std::string name);
+	Arm(std::string name ="arm");
 	virtual ~Arm();
 
 	using BaseType::toDataPackage;

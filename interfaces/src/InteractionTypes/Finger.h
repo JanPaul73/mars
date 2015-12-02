@@ -21,7 +21,7 @@ namespace datatype {
  */
 class Finger: public BaseType {
 public:
-	Finger(std::string name);
+	Finger(std::string name ="finger");
 	virtual ~Finger();
 
 	const Pose& getPose() const;

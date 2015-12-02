@@ -2,7 +2,7 @@
  * BaseState.cpp
  *
  *  Created on: 27.11.2015
- *      Author: jan
+ *      Author: Jan Paul
  */
 
 #include "BaseState.h"

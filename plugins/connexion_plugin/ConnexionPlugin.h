@@ -48,7 +48,7 @@
 #include <cstdarg>
 #include <cmath>
 
-
+#include <mars/interfaces/SpaceMouse.h>
 
 namespace mars {
   namespace plugins {
@@ -97,6 +97,9 @@ namespace mars {
         double sensitivity[6];
         mars::plugins::connexion_plugin::connexionValues *newValues;
         double motion[6];
+
+        mars::interaction::state::SpaceMouse spaceMouse_;
+
         /*
          * state[0..2] -> trans: x,y,z
          * state[3..6] -> rot: x,y,z,w (quaternion)
@@ -112,7 +115,8 @@ namespace mars {
 
         void camReset(void);
 
-        void updateCam(mars::interfaces::sReal motion[6]);
+        void updateSpaceMouseRawState(mars::interfaces::sReal motion[6]);
+        void updateSpaceMouseState();
 
         void qFromAxisAndAngle(mars::utils::Quaternion &q,
                                mars::utils::Vector vec,

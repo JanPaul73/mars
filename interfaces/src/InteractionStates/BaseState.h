@@ -2,7 +2,7 @@
  * BaseState.h
  *
  *  Created on: 27.11.2015
- *      Author: jan
+ *      Author: Jan Paul
  */
 
 #ifndef SIMULATION_MARS_INTERFACES_SRC_INTERACTIONSTATES_BASESTATE_H_
@@ -19,7 +19,7 @@ public:
 	BaseState();
 	virtual ~BaseState();
 
-	const envire::core::TransformGraph& getTransformGraph() const {
+	envire::core::TransformGraph& getTransformGraph() const { //TODO: JanPaul: Test if leaving the return type "constant" really prevents the returned graph from being altered (which is NOT what we want)!
 		return transformGraph;
 	}
 

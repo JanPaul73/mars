@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Velocity6D: public BaseType {
 public:
-	Velocity6D(std::string name);
+	Velocity6D(std::string name ="velocity6D");
 	virtual ~Velocity6D();
 
 	using BaseType::toDataPackage;

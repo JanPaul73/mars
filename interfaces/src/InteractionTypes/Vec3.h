@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Vec3: public BaseType {
 public:
-	Vec3(std::string name);
+	Vec3(std::string name ="vec3");
 	virtual ~Vec3();
 
 	using BaseType::toDataPackage;

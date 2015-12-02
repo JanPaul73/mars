@@ -20,7 +20,7 @@ namespace datatype {
  */
 class BaseType {
 public:
-	BaseType(std::string name);
+	BaseType(std::string name ="BaseType");
 	virtual ~BaseType();
 
 	int getTimestamp() const;

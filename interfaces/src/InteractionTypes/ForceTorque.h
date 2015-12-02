@@ -20,7 +20,7 @@ namespace datatype {
  */
 class ForceTorque: protected base::Wrench, public BaseType {
 public:
-	ForceTorque(std::string name);
+	ForceTorque(std::string name ="forceTorque");
 	virtual ~ForceTorque();
 
 	const base::Vector3d& getForce() const;

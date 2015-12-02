@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Leg: public BaseType {
 public:
-	Leg(std::string name);
+	Leg(std::string name ="leg");
 	virtual ~Leg();
 
 	using BaseType::toDataPackage;

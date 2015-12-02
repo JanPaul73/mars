@@ -21,7 +21,7 @@ namespace datatype {
  */
 class Hand: public BaseType {
 public:
-	Hand(std::string name);
+	Hand(std::string name ="hand");
 	virtual ~Hand();
 
 	using BaseType::toDataPackage;

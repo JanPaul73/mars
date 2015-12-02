@@ -19,7 +19,7 @@ namespace datatype {
  */
 class Analog: public BaseType {
 public:
-	Analog(std::string name);
+	Analog(std::string name ="analog");
 	virtual ~Analog();
 
 	float getValue() const; //#JanPaul: why no setters?

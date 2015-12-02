@@ -20,7 +20,7 @@ namespace datatype {
  */
 class Pose: public BaseType, public base::Pose {
 public:
-	Pose(std::string name);
+	Pose(std::string name ="pose"); //constructor with default name parameter for simple "Pose p;", also for all the other types
 	virtual ~Pose();
 
 	using BaseType::toDataPackage;
