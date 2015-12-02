@@ -3,6 +3,11 @@ set(PROJECT_VERSION 1.0)
 set(PROJECT_DESCRIPTION "This library is the base library for the MARS prject and includes the general defines, structs and classes.")
 cmake_minimum_required(VERSION 2.6)
 
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions(-std=gnu++0x)
+endif()
+
 include(FindPkgConfig)
 
 find_package(lib_manager)
@@ -61,6 +66,9 @@ set(HEADERS
     src/InteractionTypes/Pose.h
     src/InteractionTypes/Vec3.h
     src/InteractionTypes/Velocity6D.h    
+    
+    src/InteractionStates/BaseState.h
+    src/InteractionStates/SpaceMouse.h
 )
 
 set(SOURCES 
@@ -87,6 +95,9 @@ set(SOURCES
     src/InteractionTypes/Pose.cpp
     src/InteractionTypes/Vec3.cpp
     src/InteractionTypes/Velocity6D.cpp
+    
+    src/InteractionStates/BaseState.cpp
+    src/InteractionStates/SpaceMouse.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
