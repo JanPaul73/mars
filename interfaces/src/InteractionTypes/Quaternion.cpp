@@ -11,34 +11,40 @@ namespace mars {
 namespace interaction {
 namespace datatype {
 
-Vec3::Vec3(std::string name) :
+Quaternion::Quaternion(std::string name) :
 	BaseType(name)
 {
 }
 
-Vec3::~Vec3() {
+Quaternion::~Quaternion() {
 }
 
-void Vec3::toDataPackage(data_broker::DataPackage& pkg) const {
+void Quaternion::toDataPackage(data_broker::DataPackage& pkg) const {
 	std::string prefix = "";
 	if(!name.empty()) {
 		prefix = name + "/";
 	}
-	pkg.add(prefix+"x", vector.x());
-	pkg.add(prefix+"y", vector.y());
-	pkg.add(prefix+"z", vector.z());
+	pkg.add(prefix+"w", quat.x());
+	pkg.add(prefix+"x", quat.x());
+	pkg.add(prefix+"y", quat.y());
+	pkg.add(prefix+"z", quat.z());
 }
 
-void Vec3::fromDataPackage(const data_broker::DataPackage& pkg) {
+const utils::Quaternion& Quaternion::getData() const {
+	return quat;
+}
+
+void Quaternion::fromDataPackage(const data_broker::DataPackage& pkg) {
 	std::string prefix = "";
 	if(!name.empty()) {
 		prefix = name + "/";
 	}
-	float x,y,z;
+	float w,x,y,z;
+	pkg.get(prefix+"w", &w);
 	pkg.get(prefix+"x", &x);
 	pkg.get(prefix+"y", &y);
 	pkg.get(prefix+"z", &z);
-	vector = utils::Vector(x,y,z);
+	quat = utils::Quaternion(w,x,y,z);
 }
 
 } /* namespace datatype */

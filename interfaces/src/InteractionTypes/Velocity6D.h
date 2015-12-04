@@ -10,6 +10,8 @@
 
 #include "BaseType.h"
 #include "Vec3.h"
+#include <mars/utils/Vector.h>
+#include <mars/utils/Quaternion.h>
 
 namespace mars {
 namespace interaction {
@@ -29,9 +31,27 @@ public:
 	void toDataPackage(data_broker::DataPackage& pkg) const;
 	void fromDataPackage(const data_broker::DataPackage& pkg);
 
+	void setVelocity6D(mars::utils::Vector trans, mars::utils::Quaternion rot);
+
+	const Quaternion& getRotational() const {
+		return rotational;
+	}
+
+	void setRotational(const Quaternion& rotational) {
+		this->rotational = rotational;
+	}
+
+	const Vec3& getTranslational() const {
+		return translational;
+	}
+
+	void setTranslational(const Vec3& translational) {
+		this->translational = translational;
+	}
+
 protected:
 	Vec3 translational;
-	Vec3 rotational;
+	Quaternion rotational;
 };
 
 } /* namespace datatype */

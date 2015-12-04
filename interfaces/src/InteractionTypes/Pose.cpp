@@ -53,6 +53,12 @@ void Pose::fromDataPackage(const data_broker::DataPackage& pkg) {
 	orientation = base::Orientation(w,x,y,z);
 }
 
+void Pose::setPose(Vector trans, Quaternion rot) {
+	position = base::Position(trans.x(), trans.y(), trans.z());
+	orientation = base::Orientation(rot.w(),rot.x(),rot.y(),rot.z());
+}
+
 } /* namespace datatype */
 } /* namespace interaction */
 } /* namespace mars */
+

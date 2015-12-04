@@ -8,22 +8,28 @@
 #ifndef SIMULATION_MARS_INTERFACES_SRC_INTERACTIONSTATES_BASESTATE_H_
 #define SIMULATION_MARS_INTERFACES_SRC_INTERACTIONSTATES_BASESTATE_H_
 
-#include <envire_core/graph/TransformGraph.hpp>
+#include <envire_core/all>
 
 namespace mars {
 namespace interaction {
 namespace state {
+using namespace envire::core;
+using namespace std;
 
 class BaseState {
 public:
-	BaseState();
+	BaseState(const std::string& name="BaseState");
 	virtual ~BaseState();
 
-	envire::core::TransformGraph& getTransformGraph() const { //TODO: JanPaul: Test if leaving the return type "constant" really prevents the returned graph from being altered (which is NOT what we want)!
+	TransformGraph& getTransformGraph() const {
 		return transformGraph;
 	}
 
+	void updateTransformGraph();
+private:
 	static envire::core::TransformGraph transformGraph;
+	FrameId frame_;
+	std::string name_;
 };
 
 } /* namespace state */
