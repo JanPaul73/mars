@@ -28,6 +28,7 @@ public:
 	void updateTransformGraph();
 private:
 	static envire::core::TransformGraph transformGraph;
+protected:
 	FrameId frame_;
 	std::string name_;
 };
