@@ -1,6 +1,6 @@
 project(mars_interfaces)
 set(PROJECT_VERSION 1.0)
-set(PROJECT_DESCRIPTION "This library is the base library for the MARS prject and includes the general defines, structs and classes.")
+set(PROJECT_DESCRIPTION "This library is the base library for the MARS project and includes the general defines, structs and classes.")
 cmake_minimum_required(VERSION 2.6)
 
 SET(CMAKE_CXX_FLAGS "-std=c++0x")
