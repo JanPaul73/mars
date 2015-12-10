@@ -33,7 +33,7 @@ void Velocity6D::fromDataPackage(const data_broker::DataPackage& pkg) {
 	rotational.fromDataPackage(pkg);
 }
 
-void Velocity6D::setVelocity6D(mars::utils::Vector trans, mars::utils::Quaternion rot) {
+void Velocity6D::setVelocity6D(const mars::utils::Vector &trans, const mars::utils::Quaternion& rot) {
 	translational.setVector(trans);
 	rotational.setQuaternion(rot);
 }

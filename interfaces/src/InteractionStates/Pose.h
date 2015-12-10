@@ -32,7 +32,7 @@ public:
 	void toDataPackage(data_broker::DataPackage& pkg) const;
 	void fromDataPackage(const data_broker::DataPackage& pkg);
 
-	void setPose(Vector trans, Quaternion rot);
+	void setPose(const mars::utils::Vector& trans, const mars::utils::Quaternion& rot);
 
 	//Position    position;
 	//Orientation orientation;

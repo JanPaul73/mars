@@ -32,7 +32,7 @@ public:
 	void toDataPackage(data_broker::DataPackage& pkg) const;
 	void fromDataPackage(const data_broker::DataPackage& pkg);
 
-	void setVelocity6D(mars::utils::Vector trans, mars::utils::Quaternion rot);
+	void setVelocity6D(const mars::utils::Vector& trans, const mars::utils::Quaternion& rot);
 
 	const datatype::Quaternion& getRotational() const {
 		return rotational;

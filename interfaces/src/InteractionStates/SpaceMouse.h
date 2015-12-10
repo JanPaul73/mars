@@ -26,8 +26,8 @@ class SpaceMouse : BaseState{
 public:
 	SpaceMouse(const std::string& name="SpaceMouse"); //In case we want two or more Space Mice, give it a unique name in the Envire2 graph
 	virtual ~SpaceMouse();
-	void setPose(mars::utils::Vector trans, mars::utils::Quaternion rot);
-	void setVelocity(mars::utils::Vector trans, mars::utils::Quaternion rot);
+	void setPoseState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
+	void setVelocityState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
 
 	const Pose& getPoseState() const {
 		return poseState_;

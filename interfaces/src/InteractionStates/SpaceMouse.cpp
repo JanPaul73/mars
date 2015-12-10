@@ -20,14 +20,14 @@ SpaceMouse::~SpaceMouse() {
 	// TODO Auto-generated destructor stub
 }
 
-void SpaceMouse::setPose(mars::utils::Vector trans,
-		mars::utils::Quaternion rot) {
+void SpaceMouse::setPoseState(const mars::utils::Vector& trans,
+		const mars::utils::Quaternion& rot) {
 	poseState_.setPose(trans, rot);
 	updateTransformGraph();
 }
 
-void SpaceMouse::setVelocity(mars::utils::Vector trans,
-		mars::utils::Quaternion rot) {
+void SpaceMouse::setVelocityState(const mars::utils::Vector& trans,
+		const mars::utils::Quaternion& rot) {
 	velocityState_.setVelocity6D(trans, rot);
 	updateTransformGraph();
 }
