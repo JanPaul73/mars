@@ -29,6 +29,10 @@ public:
 	void toDataPackage(data_broker::DataPackage& pkg) const;
 	void fromDataPackage(const data_broker::DataPackage& pkg);
 
+	const utils::Vector& getData() const{
+		return getVector();
+	}
+
 	const utils::Vector& getVector() const {
 		return vector;
 	}

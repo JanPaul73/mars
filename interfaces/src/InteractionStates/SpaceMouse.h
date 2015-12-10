@@ -6,8 +6,8 @@
  */
 
 #include <string>
-#include <mars/interfaces/Pose.h>
-#include <mars/interfaces/Velocity6D.h>
+#include "Pose.h"
+#include "Velocity6D.h"
 #include <mars/utils/Vector.h>
 #include <mars/utils/Quaternion.h>
 #include <envire_core/items/Frame.hpp>

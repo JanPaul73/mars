@@ -9,9 +9,10 @@
 #define SIMULATION_MARS_INTERFACES_SRC_INTERACTIONTYPES_VELOCITY6D_H_
 
 #include "BaseType.h"
-#include "Vec3.h"
 #include <mars/utils/Vector.h>
 #include <mars/utils/Quaternion.h>
+#include "Vec3.h"
+#include "Quaternion.h"
 
 namespace mars {
 namespace interaction {
@@ -33,25 +34,25 @@ public:
 
 	void setVelocity6D(mars::utils::Vector trans, mars::utils::Quaternion rot);
 
-	const Quaternion& getRotational() const {
+	const datatype::Quaternion& getRotational() const {
 		return rotational;
 	}
 
-	void setRotational(const Quaternion& rotational) {
+	void setRotational(const datatype::Quaternion& rotational) {
 		this->rotational = rotational;
 	}
 
-	const Vec3& getTranslational() const {
+	const datatype::Vec3& getTranslational() const {
 		return translational;
 	}
 
-	void setTranslational(const Vec3& translational) {
+	void setTranslational(const datatype::Vec3& translational) {
 		this->translational = translational;
 	}
 
 protected:
-	Vec3 translational;
-	Quaternion rotational;
+	datatype::Vec3 translational;
+	datatype::Quaternion rotational;
 };
 
 } /* namespace datatype */

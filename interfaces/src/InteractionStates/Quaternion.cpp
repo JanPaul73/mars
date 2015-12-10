@@ -1,11 +1,11 @@
 /*
- * Vec3.cpp
+ * Quaternion.cpp
  *
  *  Created on: 16.09.2015
- *      Author: mmaurus
+ *      Author: Jan Paul
  */
 
-#include "Vec3.h"
+#include "Quaternion.h"
 
 namespace mars {
 namespace interaction {
@@ -31,7 +31,7 @@ void Quaternion::toDataPackage(data_broker::DataPackage& pkg) const {
 }
 
 const utils::Quaternion& Quaternion::getData() const {
-	return quat;
+	return getQuaternion();
 }
 
 void Quaternion::fromDataPackage(const data_broker::DataPackage& pkg) {

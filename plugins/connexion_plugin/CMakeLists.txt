@@ -4,6 +4,11 @@ SET(PROJECT_VERSION 1.0)
 SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR} "${PROJECT_SOURCE_DIR}/cmake")
 cmake_minimum_required(VERSION 2.6)
 
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+if(CMAKE_COMPILER_IS_GNUCXX)
+    add_definitions(-std=gnu++0x)
+endif()
+
 #set(CMAKE_BUILD_TYPE Debug)
 include(FindPkgConfig)
 

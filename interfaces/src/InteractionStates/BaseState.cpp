@@ -11,19 +11,27 @@ namespace mars {
 namespace interaction {
 namespace state {
 
-BaseState::BaseState(const std::string& name) :
-		name_(name), frame_(name) {
+BaseState::BaseState(const std::string& name) {
+	name_ = name;
+	frame_ = name;
 }
 
 BaseState::~BaseState() {
 	// TODO Auto-generated destructor stub
 }
 
+//envire::core::TransformGraph temp; //Would be different for each instance!
+//envire::core::TransformGraph BaseState::transformGraph=temp;
+//envire::core::TransformGraph BaseState::transformGraph();
+envire::core::TransformGraph BaseState::transformGraph;
+
 void BaseState::updateTransformGraph() {
-	vertex_descriptor desc = transformGraph.vertex(frame_); //Cannot be done in constructor, because there the frame_=name value is not yet correctly set
+	TransformGraph transformGraph;
+	vertex_descriptor desc = /*BaseState::*/transformGraph.vertex(frame_); //Cannot be done in constructor, because there the frame_=name value is not yet correctly set
 	if (desc == transformGraph.null_vertex()) {
 		transformGraph.addFrame(frame_);
-		Item<string>::Ptr item(new Item<BaseState>(this));
+		Item<BaseState*>::Ptr item(new Item<BaseState*>(this)); //Use the pointer instead, safer to be sure that no copy is created somewhere
+//		Item<std::string>::Ptr item(new Item<std::string>("test")); //If this works, the add only the Datatype without the transformGraph (which is a cyclic assignment anyway); or only a pointer to this ("this" is a pointer anyway!)
 		transformGraph.addItemToFrame(frame_, item);
 	}
 }

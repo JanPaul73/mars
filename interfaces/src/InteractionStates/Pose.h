@@ -23,7 +23,7 @@ using namespace mars::utils;
  */
 class Pose: public BaseType, public base::Pose {
 public:
-	Pose(std::string name ="pose"); //constructor with default name parameter for simple "Pose p;", also for all the other types
+	Pose(std::string name = "pose"); //constructor with default name parameter for simple "Pose p;", also for all the other types
 	virtual ~Pose();
 
 	using BaseType::toDataPackage;
@@ -34,25 +34,26 @@ public:
 
 	void setPose(Vector trans, Quaternion rot);
 
-    //Position    position;
-    //Orientation orientation;
+	//Position    position;
+	//Orientation orientation;
 
-	const utils::Vector& getPosition() const {
-		return position;
-	}
-
-	void setVector(const base::Position& position) {
-		this->position = position;
-	}
-
-	const utils::Vector& getOrientation() const {
+	const base::Orientation& getOrientation() const {
 		return orientation;
 	}
 
 	void setOrientation(const base::Orientation& orientation) {
 		this->orientation = orientation;
 	}
+
+	const base::Position& getPosition() const {
+		return position;
+	}
+
+	void setPosition(const base::Position& position) {
+		this->position = position;
+	}
 };
+
 
 } /* namespace datatype */
 } /* namespace interaction */

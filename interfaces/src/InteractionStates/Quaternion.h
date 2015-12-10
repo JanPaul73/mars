@@ -1,12 +1,12 @@
 /*
- * Vec3.h
+ * Quaternion.h
  *
  *  Created on: 16.09.2015
- *      Author: mmaurus
+ *      Author: Jan Paul
  */
 
-#ifndef SIMULATION_MARS_INTERFACES_SRC_INTERACTIONTYPES_VEC3_H_
-#define SIMULATION_MARS_INTERFACES_SRC_INTERACTIONTYPES_VEC3_H_
+#ifndef SIMULATION_MARS_INTERFACES_SRC_INTERACTIONTYPES_QUATERNION_H_
+#define SIMULATION_MARS_INTERFACES_SRC_INTERACTIONTYPES_QUATERNION_H_
 
 #include "BaseType.h"
 #include <mars/utils/Quaternion.h>

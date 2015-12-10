@@ -18,6 +18,7 @@ define_module_info()
 set(LIB_DEPS "base-lib")
 
 pkg_check_modules(PKGCONFIG REQUIRED
+        envire_core
         configmaps
         data_broker
         mars_utils
@@ -54,18 +55,19 @@ set(HEADERS
 
     src/exceptions/SceneParseException.h
     
-    src/InteractionTypes/Analog.h
-    src/InteractionTypes/Arm.h
-    src/InteractionTypes/BaseType.h
-    src/InteractionTypes/Finger.h
-    src/InteractionTypes/ForceTorque.h    
-    src/InteractionTypes/FullBody.h
-    src/InteractionTypes/Hand.h
-    src/InteractionTypes/Head.h
-    src/InteractionTypes/Leg.h
-    src/InteractionTypes/Pose.h
-    src/InteractionTypes/Vec3.h
-    src/InteractionTypes/Velocity6D.h    
+    src/InteractionStates/Analog.h
+    src/InteractionStates/Arm.h
+    src/InteractionStates/BaseType.h
+    src/InteractionStates/Finger.h
+    src/InteractionStates/ForceTorque.h    
+    src/InteractionStates/FullBody.h
+    src/InteractionStates/Hand.h
+    src/InteractionStates/Head.h
+    src/InteractionStates/Leg.h
+    src/InteractionStates/Pose.h
+    src/InteractionStates/Quaternion.h
+    src/InteractionStates/Vec3.h
+    src/InteractionStates/Velocity6D.h    
     
     src/InteractionStates/BaseState.h
     src/InteractionStates/SpaceMouse.h
@@ -83,18 +85,19 @@ set(SOURCES
     src/ControllerData.cpp
     src/utils.cpp
     
-    src/InteractionTypes/Analog.cpp
-    src/InteractionTypes/Arm.cpp
-    src/InteractionTypes/BaseType.cpp
-    src/InteractionTypes/Finger.cpp
-    src/InteractionTypes/ForceTorque.cpp    
-    src/InteractionTypes/FullBody.cpp
-    src/InteractionTypes/Hand.cpp
-    src/InteractionTypes/Head.cpp
-    src/InteractionTypes/Leg.cpp
-    src/InteractionTypes/Pose.cpp
-    src/InteractionTypes/Vec3.cpp
-    src/InteractionTypes/Velocity6D.cpp
+    src/InteractionStates/Analog.cpp
+    src/InteractionStates/Arm.cpp
+    src/InteractionStates/BaseType.cpp
+    src/InteractionStates/Finger.cpp
+    src/InteractionStates/ForceTorque.cpp    
+    src/InteractionStates/FullBody.cpp
+    src/InteractionStates/Hand.cpp
+    src/InteractionStates/Head.cpp
+    src/InteractionStates/Leg.cpp
+    src/InteractionStates/Pose.cpp
+    src/InteractionStates/Quaternion.cpp
+    src/InteractionStates/Vec3.cpp
+    src/InteractionStates/Velocity6D.cpp
     
     src/InteractionStates/BaseState.cpp
     src/InteractionStates/SpaceMouse.cpp
@@ -132,6 +135,8 @@ FILE(GLOB files "src/sim/*.h")
 install(FILES ${files} DESTINATION include/mars/interfaces/sim)
 FILE(GLOB files "src/gui/*.h")
 install(FILES ${files} DESTINATION include/mars/interfaces/gui)
+FILE(GLOB files "src/InteractionStates/*.h")
+install(FILES ${files} DESTINATION include/mars/interfaces/InteractionStates)
 
 # Prepare and install necessary files to support finding of the library 
 # using pkg-config

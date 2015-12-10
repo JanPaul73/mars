@@ -11,8 +11,9 @@ namespace mars {
 namespace interaction {
 namespace state {
 
-SpaceMouse::SpaceMouse(const std::string& name) :
-		name_(name), frame_(name) {
+SpaceMouse::SpaceMouse(const std::string& name) {
+	name_ = name;
+	frame_ = name;
 }
 
 SpaceMouse::~SpaceMouse() {
@@ -30,8 +31,6 @@ void SpaceMouse::setVelocity(mars::utils::Vector trans,
 	velocityState_.setVelocity6D(trans, rot);
 	updateTransformGraph();
 }
-
-
 
 } /* namespace state */
 } /* namespace interaction */

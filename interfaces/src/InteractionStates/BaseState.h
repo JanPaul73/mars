@@ -14,16 +14,15 @@ namespace mars {
 namespace interaction {
 namespace state {
 using namespace envire::core;
-using namespace std;
 
 class BaseState {
 public:
 	BaseState(const std::string& name="BaseState");
 	virtual ~BaseState();
 
-	TransformGraph& getTransformGraph() const {
-		return transformGraph;
-	}
+	/*TransformGraph& getTransformGraph() const {
+		return transformGraph; //TODO: Jan Paul: maybe this static reference is not liked by the linker? Just remove it as a test?
+	}*/
 
 	void updateTransformGraph();
 private:
