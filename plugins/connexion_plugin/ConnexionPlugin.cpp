@@ -156,7 +156,7 @@ namespace mars {
                                                            tmpCamState[4],
                                                            tmpCamState[5],
                                                            tmpCamState[6]);*/
-              spaceMouse_.setPose(trans, qRot);
+              spaceMouse_.setPoseState(trans, qRot);
               resetCam = false;
             }
             /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //TODO: Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
@@ -166,7 +166,7 @@ namespace mars {
             trans = q*trans;
             q = q * qRot;
 
-            spaceMouse_.setVelocity(trans, qRot);
+            spaceMouse_.setVelocityState(trans, qRot);
 
             data[0] += trans.x();
             data[1] += trans.y();
@@ -175,7 +175,7 @@ namespace mars {
             trans.x()=data[0];
             trans.y()=data[1];
             trans.z()=data[2];
-            spaceMouse_.setPose(trans, q);
+            spaceMouse_.setPoseState(trans, q);
 
             /*gw->getCameraInterface()->updateViewportQuat(data[0], data[1], data[2], //TODO: Jan Paul: Now instead write data into the Envire2 tree using the spaceMouse_ member
                                                          q.x(), q.y(), q.z(), q.w());*/
