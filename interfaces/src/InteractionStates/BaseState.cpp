@@ -34,6 +34,7 @@ void BaseState::updateTransformGraph() {
 //		Item<std::string>::Ptr item(new Item<std::string>("test")); //If this works, the add only the Datatype without the transformGraph (which is a cyclic assignment anyway); or only a pointer to this ("this" is a pointer anyway!)
 		transformGraph.addItemToFrame(frame_, item);
 	}
+	//TODO: Also update transform data of node! (and if necessary all connected nodes)
 }
 
 //see "test_transform_graph.cpp" for examples

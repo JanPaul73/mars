@@ -240,6 +240,7 @@ namespace mars {
 
       void ConnexionPlugin::preGraphicsUpdate() {
     	//TODO: Jan Paul: This should now be done using an Envire2-Callback (or Envire2 Graph Data)
+    	//      See: /slam-envire_core/test/test_transform_graph.cpp for event system example
     	/*
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
