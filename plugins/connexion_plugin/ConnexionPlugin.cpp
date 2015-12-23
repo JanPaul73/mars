@@ -159,9 +159,18 @@ namespace mars {
               spaceMouse_.setPoseState(trans, qRot);
               resetCam = false;
             }
-            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //TODO: Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
+            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
                                                       data+3, data+4, data+5,
                                                       data+6);*/
+            data[0]=spaceMouse_.getPoseState().position.x();//Jan Paul: Now reading data from the Envire2 tree using the spaceMouse_ member
+            data[1]=spaceMouse_.getPoseState().position.y();
+            data[2]=spaceMouse_.getPoseState().position.z();
+
+            data[3]=spaceMouse_.getPoseState().orientation.x();
+            data[4]=spaceMouse_.getPoseState().orientation.y();
+            data[5]=spaceMouse_.getPoseState().orientation.z();
+            data[6]=spaceMouse_.getPoseState().orientation.w();
+
             q = Quaternion(data[6], data[3], data[4], data[5]);
             trans = q*trans;
             q = q * qRot;
@@ -175,22 +184,33 @@ namespace mars {
             trans.x()=data[0];
             trans.y()=data[1];
             trans.z()=data[2];
-            spaceMouse_.setPoseState(trans, q);
-
-            /*gw->getCameraInterface()->updateViewportQuat(data[0], data[1], data[2], //TODO: Jan Paul: Now instead write data into the Envire2 tree using the spaceMouse_ member
+            /*gw->getCameraInterface()->updateViewportQuat(data[0], data[1], data[2], //Jan Paul: Now instead write data into the Envire2 tree using the spaceMouse_ member and change the camera state in callback reacting to envire2 event
                                                          q.x(), q.y(), q.z(), q.w());*/
+            spaceMouse_.setPoseState(trans, q);//Jan Paul: Now writing data into the Envire2 tree using the spaceMouse_ member
           //}
         }
         else if (object_mode == 2) {
           //interfaces::GraphicsWindowInterface *gw = control->graphics->get3DWindow(win_id);
 
           //if (gw) {
-            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //TODO: Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
+            /*gw->getCameraInterface()->getViewportQuat(data, data+1, data+2, //Jan Paul: Now instead read data from the Envire2 tree using the spaceMouse_ member
                                                       data+3, data+4, data+5,
                                                       data+6);*/
+
+            data[0]=spaceMouse_.getPoseState().position.x();//Jan Paul: Now reading data from the Envire2 tree using the spaceMouse_ member
+            data[1]=spaceMouse_.getPoseState().position.y();
+            data[2]=spaceMouse_.getPoseState().position.z();
+
+            data[3]=spaceMouse_.getPoseState().orientation.x();
+            data[4]=spaceMouse_.getPoseState().orientation.y();
+            data[5]=spaceMouse_.getPoseState().orientation.z();
+            data[6]=spaceMouse_.getPoseState().orientation.w();
+
             q = Quaternion(data[6], data[3], data[4], data[5]);
             trans = q*trans;
-          }
+
+            spaceMouse_.setVelocityState(trans, qRot);
+          //}
           core_objects_exchange node;
           control->nodes->getNodeExchange(object_id, &node);
           Quaternion tmpQ(node.rot);
@@ -211,9 +231,11 @@ namespace mars {
           my_node.index = object_id;
           my_node.pos = tmpV;
           my_node.rot = tmpQ;
-          control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL);
-          control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
-        //}
+          //control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL); //Now instead write data into the Envire2 tree using the spaceMouse_ member and TODO: change the object state in callback reacting to envire2 event
+          //control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
+
+          spaceMouse_.setPoseState(my_node.pos, my_node.rot);//Jan Paul: Now writing data into the Envire2 tree using the spaceMouse_ member
+        }
       }
 
       void ConnexionPlugin::preGraphicsUpdate() {
