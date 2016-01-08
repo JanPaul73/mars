@@ -20,9 +20,9 @@ public:
 	BaseState(const std::string& name="BaseState");
 	virtual ~BaseState();
 
-	/*TransformGraph& getTransformGraph() const {
-		return transformGraph; //TODO: Jan Paul: maybe this static reference is not liked by the linker? Just remove it as a test?
-	}*/
+	TransformGraph& getTransformGraph() const {
+		return transformGraph;
+	}
 
 	void updateTransformGraph();
 private:
