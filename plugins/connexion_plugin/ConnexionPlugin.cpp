@@ -241,6 +241,8 @@ namespace mars {
       void ConnexionPlugin::preGraphicsUpdate() {
     	//TODO: Jan Paul: This should now be done using an Envire2-Callback (or Envire2 Graph Data)
     	//      See: /slam-envire_core/test/test_transform_graph.cpp for event system example
+    	//      As there are only ItemAdded and ItemRemoved events in Envire2, a new event should always be added as a new item, thus firing the ItemAdded event, while the old event iItems of the same type should be deleted before. Otherwise, an ItemChanged event would have to be added to Envire2.
+    	//      -> Keep a record of all old events here (just a pointer list) to be able to remove the according items quicker?
     	/*
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
