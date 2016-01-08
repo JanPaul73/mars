@@ -31,7 +31,7 @@ void BaseState::updateTransformGraph() {
 	if (desc == transformGraph.null_vertex()) {
 		transformGraph.addFrame(frame_);
 		Item<BaseState*>::Ptr item(new Item<BaseState*>(this)); //Use the pointer instead, safer to be sure that no copy is created somewhere
-//		Item<std::string>::Ptr item(new Item<std::string>("test")); //If this works, the add only the Datatype without the transformGraph (which is a cyclic assignment anyway); or only a pointer to this ("this" is a pointer anyway!)
+//		Item<std::string>::Ptr item(new Item<std::string>("test")); //If this works, then add only the Datatype without the transformGraph (which is a cyclic assignment anyway); or only a pointer to this ("this" is a pointer anyway!)
 		transformGraph.addItemToFrame(frame_, item);
 	}
 	//TODO: Also update transform data of node! (and if necessary all connected nodes)
