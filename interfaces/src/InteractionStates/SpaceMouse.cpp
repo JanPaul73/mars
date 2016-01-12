@@ -11,9 +11,7 @@ namespace mars {
 namespace interaction {
 namespace state {
 
-SpaceMouse::SpaceMouse(const std::string& name) {
-	name_ = name;
-	frame_ = name;
+SpaceMouse::SpaceMouse(const std::string& name) : BaseState(name){
 }
 
 SpaceMouse::~SpaceMouse() {
