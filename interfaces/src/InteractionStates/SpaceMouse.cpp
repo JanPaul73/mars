@@ -13,7 +13,6 @@ namespace state {
 
 SpaceMouse::SpaceMouse(const std::string& name) :
 		BaseState(name) {
-	Item<Velocity6D *>::Ptr SpaceMouse::velocityStateItem_ = Item<Velocity6D *>::Ptr(new Item<Transform *>(&velocityState_));
 	transformGraph_.addItemToFrame(frame_, velocityStateItem_);
 }
 
@@ -24,7 +23,8 @@ SpaceMouse::~SpaceMouse() {
 
 Pose SpaceMouse::poseState_; //Necessary?
 Velocity6D SpaceMouse::velocityState_; //Necessary?
-Item<Velocity6D *>::Ptr SpaceMouse::velocityStateItem_(new Item<Transform *>(&velocityState_));
+Item<Velocity6D *>::Ptr SpaceMouse::velocityStateItem_(
+		new Item<Transform *>(&velocityState_));
 
 void SpaceMouse::setPoseState(const mars::utils::Vector& trans,
 		const mars::utils::Quaternion& rot) {
