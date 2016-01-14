@@ -25,13 +25,10 @@ public:
 	void updateTransformTo(Transform& tf, FrameId& other);
 	void updateTransformFrom(Transform& tf, FrameId& other);
 private:
-	static envire::core::TransformGraph transformGraph;
+	static envire::core::TransformGraph transformGraph_;
 	static const std::string root_="#root#";
-	Transform worldTF;
-	void makeSureTransformGraphExists();
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
-	void makeSureWorldTransformExists();
 protected:
 	FrameId frame_;
 	std::string name_;

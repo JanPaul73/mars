@@ -50,6 +50,7 @@ public:
 private:
 	Pose poseState_;
 	Velocity6D velocityState_;
+    Item<Velocity6D *>::Ptr velocityStateItem_;
 };
 
 } /* namespace state */
