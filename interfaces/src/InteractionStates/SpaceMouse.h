@@ -26,31 +26,27 @@ class SpaceMouse : BaseState{
 public:
 	SpaceMouse(const std::string& name="SpaceMouse"); //In case we want two or more Space Mice, give it a unique name in the Envire2 graph
 	virtual ~SpaceMouse();
-	void setPoseState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
-	void setVelocityState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
 
 	const Pose& getPoseState() const {
 		return poseState_;
 	}
 
-	void setPoseState(const Pose& poseState) {
-		poseState_ = poseState;
-		updateTransformGraph();
-	}
+	void setPoseState(const Pose& poseState);
+	void setPoseState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
 
 	const Velocity6D& getVelocityState() const {
 		return velocityState_;
 	}
 
-	void setVelocityState(const Velocity6D& velocityState) {
-		velocityState_ = velocityState;
-		updateTransformGraph();
-	}
+	void setVelocityState(const Velocity6D& velocityState);
+	void setVelocityState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
 
 private:
 	Pose poseState_;
 	Velocity6D velocityState_;
-    Item<Velocity6D *>::Ptr velocityStateItem_;
+    Item<Velocity6D *>::Ptr* velocityStateItem_;
+    void updateWorldTransform();
+    void updateVelocityState();
 };
 
 } /* namespace state */

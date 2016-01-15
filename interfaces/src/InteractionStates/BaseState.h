@@ -26,10 +26,17 @@ public:
 	void updateTransformFrom(Transform& tf, FrameId& other);
 private:
 	static envire::core::TransformGraph transformGraph_;
-	static const std::string root_="#root#";
+	static const std::string root_;
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
+
 protected:
+    template <class T>
+	void updateItem(const T &item);
+    template <class T>
+	void removeItem(const T &item);
+    template <class T>
+	void addItem(const T &item);
 	FrameId frame_;
 	std::string name_;
 };

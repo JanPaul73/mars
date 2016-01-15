@@ -32,8 +32,8 @@ BaseState::~BaseState() {
 	transformGraph_.removeFrame(frame_);
 }
 
-//envire::core::TransformGraph BaseState::transformGraph_; //Necessary?
-//std::string BaseState::root_="#root#"; //Necessary?
+envire::core::TransformGraph BaseState::transformGraph_; //Necessary?
+const std::string BaseState::root_="#root#"; //Necessary?
 
 void BaseState::makeSureTransformFromExists(FrameId& other) {
 	try {
@@ -65,6 +65,23 @@ void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
 void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
 	makeSureTransformFromExists(other);
 	transformGraph_.updateTransform(other, frame_, tf);
+}
+
+template <class T>
+void BaseState::updateItem(const T &item)
+{
+ removeItem(item); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
+ addItem(item);
+}
+template <class T>
+void BaseState::removeItem(const T &item)
+{
+ transformGraph_.removeItemFromFrame(frame_, *item);
+}
+template <class T>
+void BaseState::addItem(const T &item)
+{
+ transformGraph_.addItemToFrame(frame_, *item);
 }
 
 //see "test_transform_graph.cpp" for examples
