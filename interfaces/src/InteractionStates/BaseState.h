@@ -10,6 +10,7 @@
 #define SIMULATION_MARS_INTERFACES_SRC_INTERACTIONSTATES_BASESTATE_H_
 
 #include <envire_core/all>
+#include "BaseType.h"
 
 namespace mars {
 namespace interaction {
@@ -25,18 +26,15 @@ public:
 	void updateTransformTo(Transform& tf, FrameId& other);
 	void updateTransformFrom(Transform& tf, FrameId& other);
 private:
-	static envire::core::TransformGraph transformGraph_;
+	static envire::core::EnvireGraph envireGraph_;
 	static const std::string root_;
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
 
 protected:
-    template <class T>
-	void updateItem(const T &item);
-    template <class T>
-	void removeItem(const T &item);
-    template <class T>
-	void addItem(const T &item);
+	void updateItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
+	void removeItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
+	void addItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
 	FrameId frame_;
 	std::string name_;
 };

@@ -15,73 +15,71 @@ BaseState::BaseState(const std::string& name) {
 	name_ = name;
 	frame_ = name;
 
-	transformGraph_.addFrame(frame_);
+	envireGraph_.addFrame(frame_);
 	Item<BaseState*>::Ptr item(new Item<BaseState*>(this)); //Use the pointer instead of reference, safer to be sure that no content copy is created somewhere
-	transformGraph_.addItemToFrame(frame_, item);
+	envireGraph_.addItemToFrame(frame_, item);
 
-	if (transformGraph_.vertex(root_) == transformGraph_.null_vertex()) { //Has maybe already been done by other constructor call (transformGraph_ is static)
-		transformGraph_.addFrame(root_);
+	if (envireGraph_.vertex(root_) == envireGraph_.null_vertex()) { //Has maybe already been done by other constructor call (transformGraph_ is static)
+		envireGraph_.addFrame(root_);
 	}
 	//World transform:
 	Transform tf; //Null transformation for now, should be OK to keep it on stack, as transformGraph.addTransform copies it into a struct
-	transformGraph_.addTransform(root_, frame_, tf);
+	envireGraph_.addTransform(root_, frame_, tf);
 }
 
 BaseState::~BaseState() {
-	transformGraph_.removeTransform(root_, frame_);
-	transformGraph_.removeFrame(frame_);
+	//envireGraph_.removeTransform(root_, frame_); //".removeTransform" no longer exists
+	envireGraph_.removeFrame(frame_);
 }
 
-envire::core::TransformGraph BaseState::transformGraph_; //Necessary?
+envire::core::EnvireGraph BaseState::envireGraph_; //Necessary?
 const std::string BaseState::root_="#root#"; //Necessary?
 
 void BaseState::makeSureTransformFromExists(FrameId& other) {
 	try {
-		transformGraph_.getTransform(other, frame_);
+		envireGraph_.getTransform(other, frame_);
 	} catch (UnknownTransformException &e) {
 		Transform tf; //Null transformation for now, should be OK to keep it on stack, as transformGraph.addTransform copies it into a struct
-		transformGraph_.addTransform(other, frame_, tf);
+		envireGraph_.addTransform(other, frame_, tf);
 	}
 }
 
 void BaseState::makeSureTransformToExists(FrameId& other) {
 	try {
-		transformGraph_.getTransform(frame_, other);
+		envireGraph_.getTransform(frame_, other);
 	} catch (UnknownTransformException &e) {
 		Transform tf; //Null transformation for now, should be OK to keep it on stack, as transformGraph.addTransform copies it into a struct
-		transformGraph_.addTransform(frame_, other, tf);
+		envireGraph_.addTransform(frame_, other, tf);
 	}
 }
 
 void BaseState::updateWorldTransform(Transform& tf) {
-	transformGraph_.updateTransform(root_, frame_, tf);
+	envireGraph_.updateTransform(root_, frame_, tf);
 }
 
 void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
 	makeSureTransformToExists(other);
-	transformGraph_.updateTransform(frame_, other, tf);
+	envireGraph_.updateTransform(frame_, other, tf);
 }
 
 void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
 	makeSureTransformFromExists(other);
-	transformGraph_.updateTransform(other, frame_, tf);
+	envireGraph_.updateTransform(other, frame_, tf);
 }
 
-template <class T>
-void BaseState::updateItem(const T &item)
+void BaseState::updateItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
 {
  removeItem(item); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
  addItem(item);
 }
-template <class T>
-void BaseState::removeItem(const T &item)
+void BaseState::removeItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
 {
- transformGraph_.removeItemFromFrame(frame_, *item);
+	EnvireGraph::ItemIterator<Item<mars::interaction::datatype::BaseType *>> it;
+ envireGraph_.removeItemFromFrame(frame_, item);
 }
-template <class T>
-void BaseState::addItem(const T &item)
+void BaseState::addItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
 {
- transformGraph_.addItemToFrame(frame_, *item);
+ envireGraph_.addItemToFrame(frame_, item);
 }
 
 //see "test_transform_graph.cpp" for examples
