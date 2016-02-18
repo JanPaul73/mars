@@ -67,17 +67,16 @@ void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
 	envireGraph_.updateTransform(other, frame_, tf);
 }
 
-void BaseState::updateItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
+void BaseState::updateItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item)
 {
  removeItem(item); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
  addItem(item);
 }
-void BaseState::removeItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
+void BaseState::removeItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item)
 {
-	EnvireGraph::ItemIterator<Item<mars::interaction::datatype::BaseType *>> it;
  envireGraph_.removeItemFromFrame(frame_, item);
 }
-void BaseState::addItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item)
+void BaseState::addItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item)
 {
  envireGraph_.addItemToFrame(frame_, item);
 }

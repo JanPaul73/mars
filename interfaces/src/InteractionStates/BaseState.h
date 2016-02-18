@@ -32,9 +32,9 @@ private:
 	void makeSureTransformToExists(FrameId& other);
 
 protected:
-	void updateItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
-	void removeItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
-	void addItem(const Item<mars::interaction::datatype::BaseType *>::Ptr &item);
+	void updateItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
+	void removeItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
+	void addItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
 	FrameId frame_;
 	std::string name_;
 };

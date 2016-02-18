@@ -13,12 +13,12 @@ namespace state {
 
 SpaceMouse::SpaceMouse(const std::string& name) :
 		BaseState(name) {
-	velocityStateItem_=new Item<Velocity6D *>::Ptr(new Item<Velocity6D *>(&velocityState_));
-	addItem(velocityStateItem_);
+	velocityStateItem_=new Item<Velocity6D>::Ptr(new Item<Velocity6D>(velocityState_));
+	addItem(*velocityStateItem_);
 }
 
 SpaceMouse::~SpaceMouse() {
-	removeItem(velocityStateItem_);
+	removeItem(*velocityStateItem_);
 	delete(velocityStateItem_);
 }
 

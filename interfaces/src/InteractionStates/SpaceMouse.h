@@ -44,7 +44,7 @@ public:
 private:
 	Pose poseState_;
 	Velocity6D velocityState_;
-    Item<Velocity6D *>::Ptr* velocityStateItem_;
+    Item<Velocity6D>::Ptr* velocityStateItem_;
     void updateWorldTransform();
     void updateVelocityState();
 };
