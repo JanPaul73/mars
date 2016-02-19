@@ -18,7 +18,7 @@ SpaceMouse::SpaceMouse(const std::string& name) :
 }
 
 SpaceMouse::~SpaceMouse() {
-	removeItem(*velocityStateItem_);
+	//removeItem(*velocityStateItem_); //TODO: JP: method not yet working like that
 	delete(velocityStateItem_);
 }
 
@@ -52,7 +52,7 @@ void SpaceMouse::setVelocityState(const mars::utils::Vector& trans,
 
 void SpaceMouse::updateVelocityState() {
 	velocityStateItem_->get()->setTime(base::Time::now());
-	updateItem(velocityStateItem_);
+	updateItem(*velocityStateItem_);
 	//transformGraph_.removeItemFromFrame(frame_, velocityStateItem_);
 	//transformGraph_.addItemToFrame(frame_, velocityStateItem_); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
 }

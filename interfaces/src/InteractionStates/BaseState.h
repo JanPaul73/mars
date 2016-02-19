@@ -32,9 +32,22 @@ private:
 	void makeSureTransformToExists(FrameId& other);
 
 protected:
-	void updateItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
-	void removeItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
-	void addItem(const Item<mars::interaction::datatype::BaseType>::Ptr &item);
+    template <typename Item>
+	void updateItem(Item item)
+	{
+	 removeItem(item); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
+	 addItem(item);
+	}
+    template <typename Item>
+	void removeItem(Item item)
+	{
+	 //envireGraph_.removeItemFromFrame(frame_, item);//TODO: JP: method not yet working like that
+	}
+    template <typename Item>
+	void addItem(Item item)
+	{
+	 envireGraph_.addItemToFrame(frame_, item);
+	}
 	FrameId frame_;
 	std::string name_;
 };
