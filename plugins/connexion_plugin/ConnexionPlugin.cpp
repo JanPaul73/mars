@@ -63,6 +63,7 @@ namespace mars {
         isInit = false;
         init();
         newValues = new connexionValues;
+        GraphEventDispatcher(&mars::interaction::state::BaseState::envireGraph_); //EnvireGraph will exist already as this.spaceMouse_ has already been created here
       }
 
       void ConnexionPlugin::init() {
@@ -241,8 +242,6 @@ namespace mars {
       void ConnexionPlugin::preGraphicsUpdate() {
     	//TODO: Jan Paul: This should now be done using an Envire2-Callback (or Envire2 Graph Data)
     	//      See: /slam-envire_core/test/test_transform_graph.cpp for event system example
-    	//      As there are only ItemAdded and ItemRemoved events in Envire2, a new event should always be added as a new item, thus firing the ItemAdded event, while the old event iItems of the same type should be deleted before. Otherwise, an ItemChanged event would have to be added to Envire2.
-    	//      -> Keep a record of all old events here (just a pointer list) to be able to remove the according items quicker?
     	/*
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
@@ -521,6 +520,23 @@ namespace mars {
       void ConnexionPlugin::setSensitivity(int axis, double sens) {
         if(axis > 0 && axis < 7) sensitivity[axis-1] = sens;
       }
+
+      //void edgeAdded(const EdgeAddedEvent& e) {}
+      //void edgeRemoved(const EdgeRemovedEvent& e) {}
+      void edgeModified(const EdgeModifiedEvent& e)
+      {
+       if (e.target==spaceMouse_.frame)
+       {
+         std::cout<<"___________________________SpaceMouseMoved\n";
+       }
+      }
+      //void frameAdded(const FrameAddedEvent& e) {}
+      //void frameRemoved(const FrameRemovedEvent& e) {}
+      void itemAdded(const ItemAddedEvent& e)
+      {
+
+      }
+      //void itemRemoved(const ItemRemovedEvent& e) {}
 
     } // end of namespace connexion_plugin
   } // end of namespace plugins

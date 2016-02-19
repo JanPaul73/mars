@@ -20,31 +20,31 @@ using namespace envire::core;
 class BaseState { //TODO: More complex types like a hand or a skeleton should be made out of more than one of such objects, inheriting from "BaseComplexState"
 public:
 	BaseState(const std::string& name="BaseState");
+	static envire::core::EnvireGraph envireGraph_;
 	virtual ~BaseState();
 
 	void updateWorldTransform(Transform& tf);
 	void updateTransformTo(Transform& tf, FrameId& other);
 	void updateTransformFrom(Transform& tf, FrameId& other);
 private:
-	static envire::core::EnvireGraph envireGraph_;
 	static const std::string root_;
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
 
 protected:
     template <typename Item>
-	void updateItem(Item item)
+	void updateItem(const Item &item)
 	{
 	 removeItem(item); //Removed before just to trigger the add event, adding an "itemChanged" event to Envire2 would be nicer
 	 addItem(item);
 	}
     template <typename Item>
-	void removeItem(Item item)
+	void removeItem(const Item &item)
 	{
-	 //envireGraph_.removeItemFromFrame(frame_, item);//TODO: JP: method not yet working like that
+	 envireGraph_.removeItemFromFrame(item);
 	}
     template <typename Item>
-	void addItem(Item item)
+	void addItem(const Item &item)
 	{
 	 envireGraph_.addItemToFrame(frame_, item);
 	}

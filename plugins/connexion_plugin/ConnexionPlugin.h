@@ -48,6 +48,8 @@
 #include <cstdarg>
 #include <cmath>
 
+#include <envire_core/events/GraphEventDispatcher.hpp>
+
 #include <mars/interfaces/SpaceMouse.h>
 
 namespace mars {
@@ -60,7 +62,8 @@ namespace mars {
       class ConnexionPlugin : public QThread, 
                               public mars::interfaces::MarsPluginTemplateGUI,
                               public mars::main_gui::MenuInterface,
-                              public mars::interfaces::GraphicsUpdateInterface {
+                              public mars::interfaces::GraphicsUpdateInterface,
+							  public envire::core::GraphEventDispatcher{
 
         Q_OBJECT
 
