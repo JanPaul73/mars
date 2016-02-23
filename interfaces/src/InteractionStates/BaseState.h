@@ -20,12 +20,13 @@ using namespace envire::core;
 class BaseState { //TODO: More complex types like a hand or a skeleton should be made out of more than one of such objects, inheriting from "BaseComplexState"
 public:
 	BaseState(const std::string& name="BaseState");
-	static envire::core::EnvireGraph envireGraph_;
 	virtual ~BaseState();
 
 	void updateWorldTransform(Transform& tf);
 	void updateTransformTo(Transform& tf, FrameId& other);
 	void updateTransformFrom(Transform& tf, FrameId& other);
+	static envire::core::EnvireGraph envireGraph_;
+	FrameId frame_;
 private:
 	static const std::string root_;
 	void makeSureTransformFromExists(FrameId& other);
@@ -48,7 +49,6 @@ protected:
 	{
 	 envireGraph_.addItemToFrame(frame_, item);
 	}
-	FrameId frame_;
 	std::string name_;
 };
 

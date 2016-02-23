@@ -51,6 +51,8 @@
 #include <envire_core/events/GraphEventDispatcher.hpp>
 
 #include <mars/interfaces/SpaceMouse.h>
+#include <mars/interfaces/BaseStateEventDispatcher.h>
+
 
 namespace mars {
   namespace plugins {
@@ -63,7 +65,7 @@ namespace mars {
                               public mars::interfaces::MarsPluginTemplateGUI,
                               public mars::main_gui::MenuInterface,
                               public mars::interfaces::GraphicsUpdateInterface,
-							  public envire::core::GraphEventDispatcher{
+							  public mars::interaction::state::BaseStateEventDispatcher {
 
         Q_OBJECT
 
@@ -140,6 +142,8 @@ namespace mars {
         void setObjectMode(int mode);
         void setLockAxis(int axis, bool val);
         void setSensitivity(int axis, double val);
+        void edgeModified(const envire::core::EdgeModifiedEvent& e);
+        void itemAdded(const envire::core::ItemAddedEvent& e);
       }; // end of class ConnexionPlugin
 
     } // end of namespace connexion_plugin

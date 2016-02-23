@@ -22,7 +22,7 @@ namespace interaction {
 namespace state {
 using namespace mars::interaction::datatype;
 
-class SpaceMouse : BaseState{
+class SpaceMouse : public BaseState{
 public:
 	SpaceMouse(const std::string& name="SpaceMouse"); //In case we want two or more Space Mice, give it a unique name in the Envire2 graph
 	virtual ~SpaceMouse();

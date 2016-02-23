@@ -63,7 +63,7 @@ namespace mars {
         isInit = false;
         init();
         newValues = new connexionValues;
-        GraphEventDispatcher(&mars::interaction::state::BaseState::envireGraph_); //EnvireGraph will exist already as this.spaceMouse_ has already been created here
+	mars::interaction::state::BaseStateEventDispatcher();
       }
 
       void ConnexionPlugin::init() {
@@ -523,16 +523,16 @@ namespace mars {
 
       //void edgeAdded(const EdgeAddedEvent& e) {}
       //void edgeRemoved(const EdgeRemovedEvent& e) {}
-      void edgeModified(const EdgeModifiedEvent& e)
+      void ConnexionPlugin::edgeModified(const envire::core::EdgeModifiedEvent& e)
       {
-       if (e.target==spaceMouse_.frame)
+       if (e.target==spaceMouse_.frame_)
        {
          std::cout<<"___________________________SpaceMouseMoved\n";
        }
       }
       //void frameAdded(const FrameAddedEvent& e) {}
       //void frameRemoved(const FrameRemovedEvent& e) {}
-      void itemAdded(const ItemAddedEvent& e)
+      void ConnexionPlugin::itemAdded(const envire::core::ItemAddedEvent& e)
       {
 
       }

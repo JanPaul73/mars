@@ -29,6 +29,10 @@ BaseState::BaseState(const std::string& name) {
 
 BaseState::~BaseState() {
 	//envireGraph_.removeTransform(root_, frame_); //".removeTransform" no longer exists
+	//TODO: JP: However, then how do I avoid this error?:
+	//terminate called after throwing an instance of 'envire::core::FrameStillConnectedException'
+	//  what():  Frame BaseState is stil connected to the graph. All transforms coming from or leading to this frame need to be removed before removing the frame
+
 	envireGraph_.removeFrame(frame_);
 }
 

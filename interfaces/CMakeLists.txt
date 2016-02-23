@@ -71,6 +71,7 @@ set(HEADERS
     
     src/InteractionStates/BaseState.h
     src/InteractionStates/SpaceMouse.h
+    src/InteractionStates/BaseStateEventDispatcher.h
 )
 
 set(SOURCES 
@@ -101,6 +102,7 @@ set(SOURCES
     
     src/InteractionStates/BaseState.cpp
     src/InteractionStates/SpaceMouse.cpp
+    src/InteractionStates/BaseStateEventDispatcher.cpp
 )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
