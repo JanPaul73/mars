@@ -15,6 +15,8 @@ BaseState::BaseState(const std::string& name) {
 	name_ = name;
 	frame_ = name;
 
+	std::cout << "Adding Frame: " << frame_ << "\n";
+
 	envireGraph_.addFrame(frame_);
 	Item<BaseState*>::Ptr item(new Item<BaseState*>(this)); //Use the pointer instead of reference, safer to be sure that no content copy is created somewhere
 	envireGraph_.addItemToFrame(frame_, item);
@@ -28,11 +30,8 @@ BaseState::BaseState(const std::string& name) {
 }
 
 BaseState::~BaseState() {
-	//envireGraph_.removeTransform(root_, frame_); //".removeTransform" no longer exists
-	//TODO: JP: However, then how do I avoid this error?:
-	//terminate called after throwing an instance of 'envire::core::FrameStillConnectedException'
-	//  what():  Frame BaseState is stil connected to the graph. All transforms coming from or leading to this frame need to be removed before removing the frame
-
+	envireGraph_.removeTransform(root_, frame_);
+	//envireGraph_.removeTransform(frame_, root_);//JP: The above command does that already implicitly
 	envireGraph_.removeFrame(frame_);
 }
 

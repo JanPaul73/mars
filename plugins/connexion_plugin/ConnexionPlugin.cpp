@@ -63,7 +63,7 @@ namespace mars {
         isInit = false;
         init();
         newValues = new connexionValues;
-	mars::interaction::state::BaseStateEventDispatcher();
+	    mars::interaction::state::BaseStateEventDispatcher();
       }
 
       void ConnexionPlugin::init() {

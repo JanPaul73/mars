@@ -12,7 +12,9 @@ namespace interaction {
 namespace state {
 
 BaseStateEventDispatcher::BaseStateEventDispatcher() {
- GraphEventDispatcher(&(mars::interaction::state::BaseState().envireGraph_)); //envireGraph_ should exist already as it is static and will exist as just for this call we temporarily create a BaseState instance on the stack. (Accessing envireGraph_ directly produced an "invalid use of qualified-name" error.)
+	std::cout << "Creating temp BaseState to get envireGraph_.\n";
+	GraphEventDispatcher(&(mars::interaction::state::BaseState().envireGraph_)); //envireGraph_ should exist already as it is static and will exist as just for this call we temporarily create a BaseState instance on the stack. (Accessing envireGraph_ directly produced an "invalid use of qualified-name" error.)
+	std::cout << "Created (and most problably correctly destroyed) temp BaseState to get envireGraph_.\n";
 }
 
 BaseStateEventDispatcher::~BaseStateEventDispatcher() {
