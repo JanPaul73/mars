@@ -12,6 +12,7 @@ namespace interaction {
 namespace state {
 
 BaseState::BaseState(const std::string& name) {
+	std::cout << "Creating BaseState.\n";
 	name_ = name;
 	frame_ = name;
 
@@ -30,6 +31,7 @@ BaseState::BaseState(const std::string& name) {
 }
 
 BaseState::~BaseState() {
+	std::cout << "Deleting BaseState.\n";
 	envireGraph_.removeTransform(root_, frame_);
 	//envireGraph_.removeTransform(frame_, root_);//JP: The above command does that already implicitly
 	envireGraph_.removeFrame(frame_);
@@ -57,15 +59,18 @@ void BaseState::makeSureTransformToExists(FrameId& other) {
 }
 
 void BaseState::updateWorldTransform(Transform& tf) {
+	std::cout << "Updating transform from root to " << frame_ << ".\n";
 	envireGraph_.updateTransform(root_, frame_, tf);
 }
 
 void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
+	std::cout << "Updating transform from" << frame_ << " to " << other << ".\n";
 	makeSureTransformToExists(other);
 	envireGraph_.updateTransform(frame_, other, tf);
 }
 
 void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
+	std::cout << "Updating transform from" << other << " to " << frame_ << ".\n";
 	makeSureTransformFromExists(other);
 	envireGraph_.updateTransform(other, frame_, tf);
 }

@@ -13,11 +13,13 @@ namespace state {
 
 SpaceMouse::SpaceMouse(const std::string& name) :
 		BaseState(name) {
+	std::cout << "Creating SpaceMouse.\n";
 	velocityStateItem_=new Item<Velocity6D>::Ptr(new Item<Velocity6D>(velocityState_));
 	addItem(*velocityStateItem_);
 }
 
 SpaceMouse::~SpaceMouse() {
+	std::cout << "Deleting SpaceMouse.\n";
 	//removeItem(*velocityStateItem_); //TODO: JP: method not yet working like that
 	delete(velocityStateItem_);
 }
@@ -29,6 +31,7 @@ void SpaceMouse::setPoseState(const Pose& poseState) {
 
 void SpaceMouse::setPoseState(const mars::utils::Vector& trans,
 		const mars::utils::Quaternion& rot) {
+	std::cout << "Setting pose state in SpaceMouse.\n";
 	poseState_.setPose(trans, rot);
 	updateWorldTransform();
 }

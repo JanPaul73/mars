@@ -122,6 +122,9 @@ namespace mars {
       }
 
       void ConnexionPlugin::updateSpaceMouseState() {
+    	std::cout << "updateSpaceMouseState.\n";
+    	//JP: This is never called!!
+
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
 
@@ -235,14 +238,15 @@ namespace mars {
           //control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL); //Now instead write data into the Envire2 tree using the spaceMouse_ member and TODO: change the object state in callback reacting to envire2 event
           //control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
 
+          std::cout << "Setting pose state from ConnexionPlugin.\n";
           spaceMouse_.setPoseState(my_node.pos, my_node.rot);//Jan Paul: Now writing data into the Envire2 tree using the spaceMouse_ member
         }
       }
 
       void ConnexionPlugin::preGraphicsUpdate() {
+      	//std::cout << "preGraphicsUpdate.\n";
     	//TODO: Jan Paul: This should now be done using an Envire2-Callback (or Envire2 Graph Data)
     	//      See: /slam-envire_core/test/test_transform_graph.cpp for event system example
-    	/*
         double data[7];
         Quaternion q(1.0, 0.0, 0.0, 0.0);
 
@@ -327,7 +331,6 @@ namespace mars {
           control->nodes->editNode(&my_node, EDIT_NODE_POS | EDIT_NODE_MOVE_ALL);
           control->nodes->editNode(&my_node, EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
         }
-        */
       }
 
       void ConnexionPlugin::menuAction(int action, bool checked) {
@@ -391,6 +394,7 @@ namespace mars {
 
 
       void ConnexionPlugin::updateSpaceMouseRawState(sReal motion[6]) {
+      	//std::cout << "updateSpaceMouseRawState.\n";
         sReal tx, ty, tz;
         sReal rx, ry, rz;
 
@@ -525,6 +529,7 @@ namespace mars {
       //void edgeRemoved(const EdgeRemovedEvent& e) {}
       void ConnexionPlugin::edgeModified(const envire::core::EdgeModifiedEvent& e)
       {
+       std::cout << "edgeModified\n";
        if (e.target==spaceMouse_.frame_)
        {
          std::cout<<"___________________________SpaceMouseMoved\n";
@@ -534,12 +539,12 @@ namespace mars {
       //void frameRemoved(const FrameRemovedEvent& e) {}
       void ConnexionPlugin::itemAdded(const envire::core::ItemAddedEvent& e)
       {
-
+         std::cout << "itemAdded\n";
       }
       //void itemRemoved(const ItemRemovedEvent& e) {}
 
     } // end of namespace connexion_plugin
-  } // end of namespace plugins
+  } // end of namesp:ace plugins
 } // end of namespace mars
 
 DESTROY_LIB(mars::plugins::connexion_plugin::ConnexionPlugin);
