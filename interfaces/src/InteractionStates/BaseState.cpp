@@ -37,7 +37,11 @@ BaseState::~BaseState() {
 	envireGraph_.removeFrame(frame_);
 }
 
-envire::core::EnvireGraph BaseState::envireGraph_; //Necessary?
+envire::core::EnvireGraph BaseState::envireGraph_; //Necessary? Yes, otherwise:
+//lib_manager - ERROR:
+//     /.../install/lib/libmars_interfaces.so: undefined symbol: _ZN4mars11interaction5state9BaseState12envireGraph_E
+
+
 const std::string BaseState::root_="#root#"; //Necessary?
 
 void BaseState::makeSureTransformFromExists(FrameId& other) {

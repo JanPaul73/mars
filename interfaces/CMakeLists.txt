@@ -54,24 +54,6 @@ set(HEADERS
     src/utils.h
 
     src/exceptions/SceneParseException.h
-    
-    src/InteractionStates/Analog.h
-    src/InteractionStates/Arm.h
-    src/InteractionStates/BaseType.h
-    src/InteractionStates/Finger.h
-    src/InteractionStates/ForceTorque.h    
-    src/InteractionStates/FullBody.h
-    src/InteractionStates/Hand.h
-    src/InteractionStates/Head.h
-    src/InteractionStates/Leg.h
-    src/InteractionStates/Pose.h
-    src/InteractionStates/Quaternion.h
-    src/InteractionStates/Vec3.h
-    src/InteractionStates/Velocity6D.h    
-    
-    src/InteractionStates/BaseState.h
-    src/InteractionStates/SpaceMouse.h
-    src/InteractionStates/BaseStateEventDispatcher.h
 )
 
 set(SOURCES 

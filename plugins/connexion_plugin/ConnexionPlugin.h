@@ -50,8 +50,8 @@
 
 #include <envire_core/events/GraphEventDispatcher.hpp>
 
-#include <mars/interfaces/SpaceMouse.h>
-#include <mars/interfaces/BaseStateEventDispatcher.h>
+#include <mars/interfaces/InteractionStates/SpaceMouse.h>
+#include <mars/interfaces/InteractionStates/BaseStateEventDispatcher.h>
 
 
 namespace mars {
@@ -142,8 +142,9 @@ namespace mars {
         void setObjectMode(int mode);
         void setLockAxis(int axis, bool val);
         void setSensitivity(int axis, double val);
-        void edgeModified(const envire::core::EdgeModifiedEvent& e);
-        void itemAdded(const envire::core::ItemAddedEvent& e);
+
+        virtual void edgeModified(const envire::core::EdgeModifiedEvent& e);
+        virtual void itemAdded(const envire::core::ItemAddedEvent& e);
       }; // end of class ConnexionPlugin
 
     } // end of namespace connexion_plugin

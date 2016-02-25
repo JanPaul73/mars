@@ -44,7 +44,7 @@ namespace mars {
       ConnexionPlugin::ConnexionPlugin(LibManager *theManager)
         : QThread(),
           MarsPluginTemplateGUI(theManager, std::string("ConnexionPlugin")) {
-
+        std::cout << "Creating ConnexionPlugin.\n";
         thread_closed = false;
         myWidget = NULL;
         object_id = 0;
@@ -63,7 +63,9 @@ namespace mars {
         isInit = false;
         init();
         newValues = new connexionValues;
+        std::cout << "Creating BaseStateEventDispatcher from ConnexionPlugin.\n";
 	    mars::interaction::state::BaseStateEventDispatcher();
+        std::cout << "Created BaseStateEventDispatcher from ConnexionPlugin.\n";
       }
 
       void ConnexionPlugin::init() {
@@ -385,7 +387,7 @@ namespace mars {
             camReset();
           }
 
-          msleep(20);
+          msleep(20*500); //TODO: JP: *500 just to make it slower for testing, remove this!
         }
         LOG_INFO("%s: ... stopped",name.c_str());
 
@@ -454,6 +456,13 @@ namespace mars {
         camState[0] += move.x(); //x-axis
         camState[1] += move.y(); //y-axis
         camState[2] += move.z(); //z-axis
+
+        //Jan Paul: Now writing data into the Envire2 tree using the spaceMouse_ member:
+        std::cout << "Setting velocity state from ConnexionPlugin.\n";
+        spaceMouse_.setVelocityState(move, (q1 * q2*  q3));
+        std::cout << "Setting pose state from ConnexionPlugin.\n";
+        spaceMouse_.setPoseState(Vector({camState[0] ,camState[1] ,camState[2]}), tmpQuatState);
+
         camMutex.unlock();
       }
 
@@ -532,7 +541,7 @@ namespace mars {
        std::cout << "edgeModified\n";
        if (e.target==spaceMouse_.frame_)
        {
-         std::cout<<"___________________________SpaceMouseMoved\n";
+         std::cout << "___________________________SpaceMouseMoved\n";
        }
       }
       //void frameAdded(const FrameAddedEvent& e) {}
