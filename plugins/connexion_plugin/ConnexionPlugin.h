@@ -49,6 +49,7 @@
 #include <cmath>
 
 #include <envire_core/events/GraphEventDispatcher.hpp>
+#include <envire_core/all>
 
 #include <mars/interfaces/InteractionStates/SpaceMouse.h>
 #include <mars/interfaces/InteractionStates/BaseStateEventDispatcher.h>
@@ -93,7 +94,8 @@ namespace mars {
         std::string name;
         bool resetCam;
         bool isInit;
-        QMutex camMutex;
+        bool newValueReceived=false;
+        QMutex camMutex; //JP: To avoid deadlocks due to event system leading to multiple locks of this mutex in sequence
 
         ConnexionWidget *myWidget;
         unsigned long object_id, win_id;
@@ -105,11 +107,13 @@ namespace mars {
 
         mars::interaction::state::SpaceMouse spaceMouse_;
 
-        /*
-         * state[0..2] -> trans: x,y,z
-         * state[3..6] -> rot: x,y,z,w (quaternion)
-         */
-        mars::interfaces::sReal camState[7];
+        //JP: Only use this locally in methods now to force the new general interaction interface completely taking over the communication
+        //    of these values between the SpaceMouse driver, the event system and the display update:
+//        /*
+//         * state[0..2] -> trans: x,y,z
+//         * state[3..6] -> rot: x,y,z,w (quaternion)
+//         */
+//        mars::interfaces::sReal camState[7];
 
         // was the init of the device successful
         int is_init;
@@ -121,7 +125,7 @@ namespace mars {
         void camReset(void);
 
         void updateSpaceMouseRawState(mars::interfaces::sReal motion[6]);
-        void updateSpaceMouseState();
+        //void updateSpaceMouseState();
 
         void qFromAxisAndAngle(mars::utils::Quaternion &q,
                                mars::utils::Vector vec,

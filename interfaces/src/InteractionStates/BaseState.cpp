@@ -79,6 +79,24 @@ void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
 	envireGraph_.updateTransform(other, frame_, tf);
 }
 
+void BaseState::setPoseState(const Pose& poseState) {
+	poseState_ = poseState;
+	updateWorldTransform();
+}
+
+void BaseState::setPoseState(const mars::utils::Vector& trans,
+		const mars::utils::Quaternion& rot) {
+	std::cout << "Setting pose state in SpaceMouse.\n";
+	poseState_.setPose(trans, rot);
+	updateWorldTransform();
+}
+
+void BaseState::updateWorldTransform() {
+	Transform tf = Transform(poseState_.getPosition(),
+			poseState_.getOrientation()); //Keeping tf on stack seems to be OK, as deep down in the end, "updateWorldTransform(tf);" copies the value of tf somewhere else. Otherwise the danger would be that tf is deleted from the stack when leaving this scope, although a reference to it is still stored somewhere?
+	BaseState::updateWorldTransform(tf);
+}
+
 
 //see "test_transform_graph.cpp" for examples
 

@@ -12,9 +12,18 @@
 #include <envire_core/all>
 #include "BaseType.h"
 
+#include <string>
+#include "Pose.h"
+#include "Velocity6D.h"
+#include <mars/utils/Vector.h>
+#include <mars/utils/Quaternion.h>
+#include <envire_core/items/Frame.hpp>
+#include <envire_core/graph/TransformGraph.hpp>
+
 namespace mars {
 namespace interaction {
 namespace state {
+using namespace mars::interaction::datatype;
 using namespace envire::core;
 
 class BaseState { //TODO: More complex types like a hand or a skeleton should be made out of more than one of such objects, inheriting from "BaseComplexState"
@@ -27,11 +36,19 @@ public:
 	void updateTransformFrom(Transform& tf, FrameId& other);
 	static envire::core::EnvireGraph envireGraph_;
 	FrameId frame_;
-private:
 	static const std::string root_;
+
+	const Pose& getPoseState() const {
+		return poseState_;
+	}
+
+	void setPoseState(const Pose& poseState);
+	void setPoseState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
+private:
+	Pose poseState_;
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
-
+    void updateWorldTransform();
 protected:
     template <typename Item>
 	void updateItem(const Item &item)
