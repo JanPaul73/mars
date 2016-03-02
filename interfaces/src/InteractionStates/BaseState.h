@@ -53,20 +53,20 @@ protected:
     template <typename Item>
 	void updateItem(const Item &item)
 	{
-     std::cout << "updating Item\n";
+     //std::cout << "updating Item\n";
 	 removeItem(item); //Removed before just to be able to trigger an add event after that, adding an "itemChanged" event to Envire2 would be nicer
 	 addItem(item);
 	}
     template <typename Item>
 	void removeItem(const Item &item)
 	{
-     std::cout << "removing Item\n";
+     //std::cout << "removing Item\n";
 	 envireGraph_.removeItemFromFrame(item);
 	}
     template <typename Item>
 	void addItem(const Item &item)
 	{
-     std::cout << "adding Item\n";
+     //std::cout << "adding Item\n";
 	 envireGraph_.addItemToFrame(frame_, item);
 	}
 	std::string name_;

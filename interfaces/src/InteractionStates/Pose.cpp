@@ -54,7 +54,7 @@ void Pose::fromDataPackage(const data_broker::DataPackage& pkg) {
 }
 
 void Pose::setPose(const Vector& trans, const mars::utils::Quaternion& rot) {
-	std::cout << "Setting pose in Pose object.\n";
+	//std::cout << "Setting pose in Pose object.\n";
 	position = base::Position(trans.x(), trans.y(), trans.z());
 	orientation = base::Orientation(rot.w(),rot.x(),rot.y(),rot.z());
 }

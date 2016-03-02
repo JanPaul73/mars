@@ -54,6 +54,8 @@
 #include <mars/interfaces/InteractionStates/SpaceMouse.h>
 #include <mars/interfaces/InteractionStates/BaseStateEventDispatcher.h>
 
+#include <envire_core/items/Frame.hpp>
+
 
 namespace mars {
   namespace plugins {

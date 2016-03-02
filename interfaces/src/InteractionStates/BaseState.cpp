@@ -12,11 +12,11 @@ namespace interaction {
 namespace state {
 
 BaseState::BaseState(const std::string& name) {
-	std::cout << "Creating BaseState.\n";
+	//std::cout << "Creating BaseState.\n";
 	name_ = name;
 	frame_ = name;
 
-	std::cout << "Adding Frame: " << frame_ << "\n";
+	//std::cout << "Adding Frame: " << frame_ << "\n";
 
 	envireGraph_.addFrame(frame_);
 	Item<BaseState*>::Ptr item(new Item<BaseState*>(this)); //Use the pointer instead of reference, safer to be sure that no content copy is created somewhere
@@ -31,7 +31,7 @@ BaseState::BaseState(const std::string& name) {
 }
 
 BaseState::~BaseState() {
-	std::cout << "Deleting BaseState.\n";
+	//std::cout << "Deleting BaseState.\n";
 	envireGraph_.removeTransform(root_, frame_);
 	//envireGraph_.removeTransform(frame_, root_);//JP: The above command does that already implicitly
 	envireGraph_.removeFrame(frame_);
@@ -63,18 +63,18 @@ void BaseState::makeSureTransformToExists(FrameId& other) {
 }
 
 void BaseState::updateWorldTransform(Transform& tf) {
-	std::cout << "Updating transform from root to " << frame_ << ".\n";
+	//std::cout << "Updating transform from root to " << frame_ << ".\n";
 	envireGraph_.updateTransform(root_, frame_, tf);
 }
 
 void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
-	std::cout << "Updating transform from" << frame_ << " to " << other << ".\n";
+	//std::cout << "Updating transform from" << frame_ << " to " << other << ".\n";
 	makeSureTransformToExists(other);
 	envireGraph_.updateTransform(frame_, other, tf);
 }
 
 void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
-	std::cout << "Updating transform from" << other << " to " << frame_ << ".\n";
+	//std::cout << "Updating transform from" << other << " to " << frame_ << ".\n";
 	makeSureTransformFromExists(other);
 	envireGraph_.updateTransform(other, frame_, tf);
 }
@@ -86,7 +86,7 @@ void BaseState::setPoseState(const Pose& poseState) {
 
 void BaseState::setPoseState(const mars::utils::Vector& trans,
 		const mars::utils::Quaternion& rot) {
-	std::cout << "Setting pose state in SpaceMouse.\n";
+	//std::cout << "Setting pose state in SpaceMouse.\n";
 	poseState_.setPose(trans, rot);
 	updateWorldTransform();
 }
