@@ -151,6 +151,9 @@ namespace mars {
 
         virtual void edgeModified(const envire::core::EdgeModifiedEvent& e);
         virtual void itemAdded(const envire::core::ItemAddedEvent& e);
+
+        void setSpaceMouseToCamera();
+        void setSpaceMouseToObject();
       }; // end of class ConnexionPlugin
 
     } // end of namespace connexion_plugin

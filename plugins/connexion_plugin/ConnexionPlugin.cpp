@@ -359,7 +359,7 @@ void ConnexionPlugin::preGraphicsUpdate() {
 				gw->getCameraInterface()->getViewportQuat(data, data + 1,
 						data + 2, data + 3, data + 4, data + 5, data + 6);
 				q = Quaternion(data[6], data[3], data[4], data[5]);
-				trans = q * trans;
+				//trans = q * trans;
 			}
 			core_objects_exchange node;
 			control->nodes->getNodeExchange(object_id, &node);
@@ -367,16 +367,16 @@ void ConnexionPlugin::preGraphicsUpdate() {
 			Vector tmpV = node.pos;
 
 			//trans = QVRotate(tmpQ, trans);
-			Quaternion qi = q;
-			qi.x() *= -1;
-			qi.y() *= -1;
-			qi.z() *= -1;
-			qRot = q * qRot * qi;
+//			Quaternion qi = q;
+//			qi.x() *= -1;
+//			qi.y() *= -1;
+//			qi.z() *= -1;
+//			qRot = q * qRot * qi;
 			//tmpQ = quad_state;
-			tmpQ = qRot * tmpQ;
+			tmpQ = qRot;				// * tmpQ;
 			//tmpQ = tmpQ*qi;
 
-			tmpV += trans;
+			tmpV /*+*/= trans;
 			NodeData my_node;
 			my_node.index = object_id;
 			my_node.pos = tmpV;
@@ -386,44 +386,13 @@ void ConnexionPlugin::preGraphicsUpdate() {
 			control->nodes->editNode(&my_node,
 					EDIT_NODE_ROT | EDIT_NODE_MOVE_ALL);
 		}
-	}
-	else
+	} else //Then the 2d mouse might have changed the view or the simulation might have moved the object and we want to mirror that into the space mouse data:
 	{
-		interfaces::GraphicsWindowInterface *gw =
-							control->graphics->get3DWindow(win_id);
-
-					if (gw) {
-						gw->getCameraInterface()->getViewportQuat(data, data + 1,
-								data + 2, data + 3, data + 4, data + 5, data + 6);
-
-						Vector trans;
-						trans.x()=data[0];
-						trans.y()=data[1];
-						trans.z()=data[2];
-						Quaternion qRot;
-						qRot.x()=data[3];
-						qRot.y()=data[4];
-						qRot.z()=data[5];
-						qRot.w()=data[6];
-
-						//std::cout << "Setting velocity state from ConnexionPlugin.\n";
-						//spaceMouse_.setVelocityState(move, (q1 * q2 * q3));
-						//^The speed would have to be calculated from the new and last pose state, leaving that out for now (keeping the old velocity),
-						// as moving the 2D mouse in between is also a special case that should be seldom and also be more elegantly solved by a synchronizer
-						// in the general interaction interface that synchronizes 2d Mouse and space mouse inputs somehow.
-
-						camMutex.lock();
-						//std::cout << "Setting pose state from ConnexionPlugin.\n";
-						spaceMouse_.setPoseState(trans, qRot);
-
-						newValueReceived=false; //The above setXState commands triggered an event, but not due to real space mouse movement.
-						//                        However, the newValueReceived value will be set to true by this event
-						//                        (before these setXState Methods return, as they call the event subscribers directly in a last step).
-						//                        So reset the newValueReceived variable so that this method "ConnexionPlugin::preGraphicsUpdate"
-						//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
-						//                        here can only come from 2d mouse movements.
-						camMutex.unlock();
-					}
+		if (object_mode == 1) {
+			setSpaceMouseToCamera();
+		} else {
+			setSpaceMouseToObject();
+		}
 	}
 }
 
@@ -666,14 +635,26 @@ void ConnexionPlugin::closeWidget(void) {
 void ConnexionPlugin::objectSelected(unsigned long id) {
 	object_id = id;
 	LOG_DEBUG("id: %lu", id);
+	ConnexionPlugin::setSpaceMouseToObject();
+	if (object_mode == 2) {
+		ConnexionPlugin::setSpaceMouseToObject();
+	}
 }
 
 void ConnexionPlugin::windowSelected(unsigned long id) {
 	win_id = id;
+	if (object_mode == 1) {
+		ConnexionPlugin::setSpaceMouseToCamera();
+	}
 }
 
 void ConnexionPlugin::setObjectMode(int mode) {
 	object_mode = mode;
+	if (object_mode == 1) {
+		ConnexionPlugin::setSpaceMouseToCamera();
+	} else {
+		ConnexionPlugin::setSpaceMouseToObject();
+	}
 }
 
 void ConnexionPlugin::setLockAxis(int axis, bool val) {
@@ -692,7 +673,7 @@ void ConnexionPlugin::edgeModified(const envire::core::EdgeModifiedEvent& e) {
 	//std::cout << "edgeModified\n";
 	if (e.target == spaceMouse_.frame_) {
 		//std::cout << "___________________________SpaceMouseMoved\n";
-        camMutex.lock();
+		camMutex.lock();
 		newValueReceived = true;
 		camMutex.unlock();
 
@@ -707,7 +688,69 @@ void ConnexionPlugin::itemAdded(const envire::core::ItemAddedEvent& e) {
 }
 //void itemRemoved(const ItemRemovedEvent& e) {}
 
-}// end of namespace connexion_plugin
+void ConnexionPlugin::setSpaceMouseToCamera() {
+	std::cout << "setSpaceMouseToCamera:\n";
+	double data[7];
+
+	interfaces::GraphicsWindowInterface *gw = control->graphics->get3DWindow(
+			win_id);
+
+	if (gw) {
+		gw->getCameraInterface()->getViewportQuat(data, data + 1, data + 2,
+				data + 3, data + 4, data + 5, data + 6);
+
+		Vector trans;
+		trans.x() = data[0];
+		trans.y() = data[1];
+		trans.z() = data[2];
+		Quaternion qRot;
+		qRot.x() = data[3];
+		qRot.y() = data[4];
+		qRot.z() = data[5];
+		qRot.w() = data[6];
+
+		//std::cout << "Setting velocity state from ConnexionPlugin.\n";
+		//spaceMouse_.setVelocityState(move, (q1 * q2 * q3));
+		//^The speed would have to be calculated from the new and last pose state, leaving that out for now (keeping the old velocity),
+		// as moving the 2D mouse in between is also a special case that should be seldom and also be more elegantly solved by a synchronizer
+		// in the general interaction interface that synchronizes 2d Mouse and space mouse inputs somehow.
+
+		camMutex.lock();
+		//std::cout << "Setting pose state from ConnexionPlugin.\n";
+		spaceMouse_.setPoseState(trans, qRot);
+
+		newValueReceived = false; //The above setXState commands triggered an event, but not due to real space mouse movement.
+		//                        However, the newValueReceived value will be set to true by this event
+		//                        (before these setXState Methods return, as they call the event subscribers directly in a last step).
+		//                        So reset the newValueReceived variable so that this method "ConnexionPlugin::preGraphicsUpdate"
+		//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
+		//                        here can only come from 2d mouse movements.
+		camMutex.unlock();
+		std::cout << "setSpaceMouseToCamera done.\n";
+	}
+}
+void ConnexionPlugin::setSpaceMouseToObject() {
+	std::cout << "setSpaceMouseToObject:\n";
+	core_objects_exchange node;
+	control->nodes->getNodeExchange(object_id, &node);
+	Quaternion tmpQ(node.rot);
+	Vector tmpV = node.pos;
+
+	camMutex.lock();
+	//std::cout << "Setting pose state from ConnexionPlugin.\n";
+	spaceMouse_.setPoseState(tmpV, tmpQ);
+
+	newValueReceived = false; //The above setXState commands triggered an event, but not due to real space mouse movement.
+	//                        However, the newValueReceived value will be set to true by this event
+	//                        (before these setXState Methods return, as they call the event subscribers directly in a last step).
+	//                        So reset the newValueReceived variable so that this method "ConnexionPlugin::preGraphicsUpdate"
+	//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
+	//                        here can only come from 2d mouse movements.
+	camMutex.unlock();
+	std::cout << "setSpaceMouseToObject done.\n";
+}
+
+}					// end of namespace connexion_plugin
 } // end of namesp:ace plugins
 } // end of namespace mars
 
