@@ -97,7 +97,7 @@ namespace mars {
         bool resetCam;
         bool isInit;
         bool newValueReceived=false;
-        QMutex camMutex; //JP: To avoid deadlocks due to event system leading to multiple locks of this mutex in sequence
+        QMutex camMutex;
 
         ConnexionWidget *myWidget;
         unsigned long object_id, win_id;

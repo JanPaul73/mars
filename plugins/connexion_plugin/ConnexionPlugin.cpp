@@ -44,6 +44,7 @@ using namespace mars::sim;
 ConnexionPlugin::ConnexionPlugin(LibManager *theManager) :
 		QThread(), MarsPluginTemplateGUI(theManager,
 				std::string("ConnexionPlugin")), camMutex(QMutex::Recursive) {
+	//                                           ^JP: To avoid deadlocks due to event system leading to multiple locks of this mutex in sequence
 	//std::cout << "Creating ConnexionPlugin.\n";
 
 	thread_closed = false;
@@ -253,7 +254,7 @@ void ConnexionPlugin::preGraphicsUpdate() {
 		//      See: /slam-envire_core/test/test_transform_graph.cpp for event system example
 		Quaternion q(1.0, 0.0, 0.0, 0.0);
 
-		camMutex.lock();
+		//camMutex.lock();
 
 		// Local handling of camState variable that was global before: --------------------------------------------------------------
 		/*
@@ -262,9 +263,11 @@ void ConnexionPlugin::preGraphicsUpdate() {
 		 */
 		mars::interfaces::sReal camState[7];
 
+		camMutex.lock();
 		base::TransformWithCovariance T =
 				spaceMouse_.envireGraph_.getEdgeProperty(spaceMouse_.root_,
 						spaceMouse_.frame_).transform;
+		camMutex.unlock();
 		//^This could be done more directly using spaceMouse_ and its internal states, but the above way is to test and show that the
 		// general input interface supports string based property searches, including
 		// "e.target == spaceMouse_.frame_" in "ConnexionPlugin::edgeModified".
@@ -409,6 +412,7 @@ void ConnexionPlugin::preGraphicsUpdate() {
 						// as moving the 2D mouse in between is also a special case that should be seldom and also be more elegantly solved by a synchronizer
 						// in the general interaction interface that synchronizes 2d Mouse and space mouse inputs somehow.
 
+						camMutex.lock();
 						//std::cout << "Setting pose state from ConnexionPlugin.\n";
 						spaceMouse_.setPoseState(trans, qRot);
 
@@ -418,6 +422,7 @@ void ConnexionPlugin::preGraphicsUpdate() {
 						//                        So reset the newValueReceived variable so that this method "ConnexionPlugin::preGraphicsUpdate"
 						//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
 						//                        here can only come from 2d mouse movements.
+						camMutex.unlock();
 					}
 	}
 }
@@ -533,11 +538,13 @@ void ConnexionPlugin::updateSpaceMouseRawState(sReal motion[6]) {
 		 */
 		mars::interfaces::sReal camState[7];
 
+		camMutex.lock();
 		base::TransformWithCovariance T =
 				spaceMouse_.envireGraph_.getEdgeProperty(spaceMouse_.root_,
 						spaceMouse_.frame_).transform;
 		//^This could be done more directly using spaceMouse_ and its internal states, but the above way is to test and show that the
 		// general input interface supports string based property searches
+		camMutex.unlock();
 		Vector trans(T.translation);
 		Quaternion qRot(T.orientation);
 
@@ -580,6 +587,7 @@ void ConnexionPlugin::updateSpaceMouseRawState(sReal motion[6]) {
 		camState[1] += move.y(); //y-axis
 		camState[2] += move.z(); //z-axis
 
+		camMutex.lock();
 		//Jan Paul: Now writing data into the Envire2 tree using the spaceMouse_ member:
 		//JP: As this will trigger a new edgeModified event which will also lock the camMutex, the camMutex has been changed to recursive mode to avoid deadlocks
 		//std::cout << "Setting velocity state from ConnexionPlugin.\n";
@@ -589,13 +597,14 @@ void ConnexionPlugin::updateSpaceMouseRawState(sReal motion[6]) {
 				Vector( { camState[0], camState[1], camState[2] }),
 				tmpQuatState);
 
-		//camMutex.unlock();
+		camMutex.unlock();
 	}
 }
 
 void ConnexionPlugin::camReset(void) {
+	camMutex.lock();
 	resetCam = true;
-	//camMutex.lock();
+	camMutex.unlock();
 
 	// Local handling of camState variable that was global before: --------------------------------------------------------------
 	/*
@@ -614,14 +623,14 @@ void ConnexionPlugin::camReset(void) {
 	camState[6] = 1.0;
 
 	//JP: As this will trigger a new edgeModified event which will also lock the camMutex, the camMutex has been changed to recursive mode to avoid deadlocks
-
+	camMutex.lock();
 	//std::cout << "Setting velocity state from ConnexionPlugin, camReset.\n";
 	spaceMouse_.setVelocityState(mars::interaction::datatype::Velocity6D());
 	//std::cout << "Setting pose state from ConnexionPlugin, camReset.\n";
 	spaceMouse_.setPoseState(Vector(camState[0], camState[1], camState[2]),
 			Quaternion(camState[6], camState[3], camState[4], camState[5]));
-	//camMutex.unlock();
 	resetCam = true;
+	camMutex.unlock();
 }
 
 void ConnexionPlugin::qFromAxisAndAngle(Quaternion &q, Vector vec,
@@ -683,7 +692,9 @@ void ConnexionPlugin::edgeModified(const envire::core::EdgeModifiedEvent& e) {
 	//std::cout << "edgeModified\n";
 	if (e.target == spaceMouse_.frame_) {
 		//std::cout << "___________________________SpaceMouseMoved\n";
+        camMutex.lock();
 		newValueReceived = true;
+		camMutex.unlock();
 
 		//Now we could extract the data from spaceMouse_.envireGraph_.getEdgeProperty(spaceMouse_.root_, spaceMouse_.frame_).transform,
 		//however, as this is done in ConnexionPlugin::preGraphicsUpdate, there is no point in doing anything special here
