@@ -689,7 +689,7 @@ void ConnexionPlugin::itemAdded(const envire::core::ItemAddedEvent& e) {
 //void itemRemoved(const ItemRemovedEvent& e) {}
 
 void ConnexionPlugin::setSpaceMouseToCamera() {
-	std::cout << "setSpaceMouseToCamera:\n";
+	//std::cout << "setSpaceMouseToCamera:\n";
 	double data[7];
 
 	interfaces::GraphicsWindowInterface *gw = control->graphics->get3DWindow(
@@ -726,11 +726,11 @@ void ConnexionPlugin::setSpaceMouseToCamera() {
 		//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
 		//                        here can only come from 2d mouse movements.
 		camMutex.unlock();
-		std::cout << "setSpaceMouseToCamera done.\n";
+		//std::cout << "setSpaceMouseToCamera done.\n";
 	}
 }
 void ConnexionPlugin::setSpaceMouseToObject() {
-	std::cout << "setSpaceMouseToObject:\n";
+	//std::cout << "setSpaceMouseToObject:\n";
 	core_objects_exchange node;
 	control->nodes->getNodeExchange(object_id, &node);
 	Quaternion tmpQ(node.rot);
@@ -747,7 +747,7 @@ void ConnexionPlugin::setSpaceMouseToObject() {
 	//                        does not think that a real space mouse movement has been received, because changes to the space mouse state
 	//                        here can only come from 2d mouse movements.
 	camMutex.unlock();
-	std::cout << "setSpaceMouseToObject done.\n";
+	//std::cout << "setSpaceMouseToObject done.\n";
 }
 
 }					// end of namespace connexion_plugin
