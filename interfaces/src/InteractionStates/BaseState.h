@@ -28,12 +28,14 @@ using namespace envire::core;
 
 class BaseState { //TODO: More complex types like a hand or a skeleton should be made out of more than one of such objects, inheriting from "BaseComplexState"
 public:
-	BaseState(const std::string& name="BaseState");
+	BaseState(const std::string& name = "BaseState");
 	virtual ~BaseState();
 
-	void updateWorldTransform(Transform& tf);
-	void updateTransformTo(Transform& tf, FrameId& other);
-	void updateTransformFrom(Transform& tf, FrameId& other);
+	//void updateTransformTo(Transform& tf, FrameId& other);
+	//void updateTransformFrom(Transform& tf, FrameId& other);
+	//TODO: JP: Better:
+	//setPoseStateInCSOf(...);
+
 	static envire::core::EnvireGraph envireGraph_;
 	FrameId frame_;
 	static const std::string root_;
@@ -43,31 +45,30 @@ public:
 	}
 
 	void setPoseState(const Pose& poseState);
-	void setPoseState(const mars::utils::Vector &trans, const mars::utils::Quaternion &rot);
+	void setPoseState(const mars::utils::Vector &trans,
+			const mars::utils::Quaternion &rot);
 private:
 	Pose poseState_;
 	void makeSureTransformFromExists(FrameId& other);
 	void makeSureTransformToExists(FrameId& other);
-    void updateWorldTransform();
+	void updateWorldTransform();
+	void updateWorldTransform(Transform& tf);
 protected:
-    template <typename Item>
-	void updateItem(const Item &item)
-	{
-     //std::cout << "updating Item\n";
-	 removeItem(item); //Removed before just to be able to trigger an add event after that, adding an "itemChanged" event to Envire2 would be nicer
-	 addItem(item);
+	template<typename Item>
+	void updateItem(const Item &item) {
+		//std::cout << "updating Item\n";
+		removeItem(item); //Removed before just to be able to trigger an add event after that, adding an "itemChanged" event to Envire2 would be nicer
+		addItem(item);
 	}
-    template <typename Item>
-	void removeItem(const Item &item)
-	{
-     //std::cout << "removing Item\n";
-	 envireGraph_.removeItemFromFrame(item);
+	template<typename Item>
+	void removeItem(const Item &item) {
+		//std::cout << "removing Item\n";
+		envireGraph_.removeItemFromFrame(item);
 	}
-    template <typename Item>
-	void addItem(const Item &item)
-	{
-     //std::cout << "adding Item\n";
-	 envireGraph_.addItemToFrame(frame_, item);
+	template<typename Item>
+	void addItem(const Item &item) {
+		//std::cout << "adding Item\n";
+		envireGraph_.addItemToFrame(frame_, item);
 	}
 	std::string name_;
 };

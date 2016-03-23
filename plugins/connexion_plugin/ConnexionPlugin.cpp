@@ -267,10 +267,10 @@ void ConnexionPlugin::preGraphicsUpdate() {
 		base::TransformWithCovariance T =
 				spaceMouse_.envireGraph_.getEdgeProperty(spaceMouse_.root_,
 						spaceMouse_.frame_).transform;
-		camMutex.unlock();
 		//^This could be done more directly using spaceMouse_ and its internal states, but the above way is to test and show that the
 		// general input interface supports string based property searches, including
 		// "e.target == spaceMouse_.frame_" in "ConnexionPlugin::edgeModified".
+		camMutex.unlock();
 		Vector trans(T.translation);
 		Quaternion qRot(T.orientation);
 

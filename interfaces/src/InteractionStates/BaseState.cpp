@@ -67,17 +67,17 @@ void BaseState::updateWorldTransform(Transform& tf) {
 	envireGraph_.updateTransform(root_, frame_, tf);
 }
 
-void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
-	//std::cout << "Updating transform from" << frame_ << " to " << other << ".\n";
-	makeSureTransformToExists(other);
-	envireGraph_.updateTransform(frame_, other, tf);
-}
-
-void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
-	//std::cout << "Updating transform from" << other << " to " << frame_ << ".\n";
-	makeSureTransformFromExists(other);
-	envireGraph_.updateTransform(other, frame_, tf);
-}
+//void BaseState::updateTransformTo(Transform& tf, FrameId& other) {
+//	//std::cout << "Updating transform from" << frame_ << " to " << other << ".\n";
+//	makeSureTransformToExists(other);
+//	envireGraph_.updateTransform(frame_, other, tf);
+//}
+//
+//void BaseState::updateTransformFrom(Transform& tf, FrameId& other) {
+//	//std::cout << "Updating transform from" << other << " to " << frame_ << ".\n";
+//	makeSureTransformFromExists(other);
+//	envireGraph_.updateTransform(other, frame_, tf);
+//}
 
 void BaseState::setPoseState(const Pose& poseState) {
 	poseState_ = poseState;
